@@ -1,0 +1,19 @@
+name              = "Demo Installer"
+description       = "Demo app installer."
+documentation_url = "https://docs.nuon.co/"
+community_url     = "https://join.slack.com/t/nuoncommunity/shared_invite/zt-1q323vw9z-C8ztRP~HfWjZx6AXi50VRA"
+github_url        = "https://github.com/nuonco"
+homepage_url      = "https://www.nuon.co/"
+demo_url          = "https://www.nuon.co/"
+logo_url          = "https://assets-global.website-files.com/62a2c1332b518a9eedc6de2f/651df2030c43865b9b16046b_Group%2048.png"
+favicon_url       = "https://assets-global.website-files.com/62a2c1332b518a9eedc6de2f/651df2030c43865b9b16046b_Group%2048.png"
+copyright_markdown = """
+© 2024 Nuon.
+"""
+footer_markdown = """
+[Terms of Service](https://nuon.co/terms)
+"""
+post_install_markdown = """
+# The Nuon Demo app is being installed.
+"""
+apps = ["applftdsk7ebs7sy6nzas6ej5c"]

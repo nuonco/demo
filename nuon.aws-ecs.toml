@@ -1,0 +1,14 @@
+version = "v1"
+
+[installer]
+source = "configs/installer.toml"
+
+[runner]
+runner_type = "aws-ecs"
+
+[sandbox]
+terraform_version = "1.5.4"
+[sandbox.public_repo]
+directory = "aws-ecs"
+repo = "nuonco/sandboxes"
+branch = "main"
