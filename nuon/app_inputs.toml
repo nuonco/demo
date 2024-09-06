@@ -1,0 +1,29 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=inputs
+[[group]]
+name         = "app"
+description  = "Inputs to configure the app that will be deployed."
+display_name = "App Configuration"
+
+[[input]]
+name         = "service_name"
+description  = "What to name the ECS service"
+default      = "api"
+sensitive    = false
+display_name = "Service Name"
+group        = "app"
+
+[[input]]
+name         = "display_name"
+description  = "A display name for the service"
+default      = "Application Programming Interface"
+sensitive    = false
+display_name = "Display Name"
+group        = "app"
+
+[[input]]
+name         = "admin_user_email"
+description  = "An admin user email."
+default      = "demo@example.com"
+sensitive    = false
+display_name = "Admin Email"
+group        = "app"
