@@ -1,0 +1,39 @@
+#:schema https://api.nuon.co/v1/general/config-schema
+
+# This file contains values for common Nuon application configuration options.
+# To use it for your app, edit as needed, create an application called aws-ecs-app and run
+#
+#   nuon apps sync -c nuon.aws-ecs-app.toml
+#
+# See https://docs.nuon.co/concepts/apps for more information.
+
+version = "v1"
+description = "AWS ECS Demo Application."
+display_name = "Nuon AWS ECS Demo App"
+slack_webhook_url = "https://slack.nuon.co"
+
+# this installer is used for all the apps,
+# but it needs to be in one of the app configs we can sync it
+[installer]
+source = "installer.toml"
+
+[inputs]
+source = "app_inputs.toml"
+
+[runner]
+runner_type = "aws-ecs"
+
+[sandbox]
+terraform_version = "1.5.4"
+# https://docs.nuon.co/guides/install-access-delegation#setup-delegation
+aws_delegation_iam_role_arn = "arn:aws:iam::949309607565:role/aws-ecs-app"
+[public_repo]
+directory = "aws-ecs"
+repo      = "nuonco/sandboxes"
+branch    = "main"
+
+[[components]]
+source = "components/docker_image.toml"
+
+[[components]]
+source = "components/ecs_service.toml"
