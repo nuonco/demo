@@ -4,7 +4,9 @@ on:
     paths:
       - "nuon/**"
       - "src/**"
-shell: bash
+defaults:
+  run:
+    shell: bash
 env:
   NUON_ORG_ID: ""
   NUON_API_TOKEN: ""
