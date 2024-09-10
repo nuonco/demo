@@ -15,18 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      steps:
-        - name: Set up path
-          id: path
-          run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-        - name: Install CLI
-          id: cli
-          run: install.sh
-        - name: Sync configs
-          id: sync
-          run: nuon apps sync --all
-          working-directory: ./nuon
-        - name: Create releases
-          id: release
-          run: nuon components list -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
-          working-directory: ./nuon
+      - name: Set up path
+        id: path
+        run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      - name: Install CLI
+        id: cli
+        run: install.sh
+      - name: Sync configs
+        id: sync
+        run: nuon apps sync --all
+        working-directory: ./nuon
+      - name: Create releases
+        id: release
+        run: nuon components list -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
+        working-directory: ./nuon
