@@ -1,19 +1,19 @@
 #:schema https://api.nuon.co/v1/general/config-schema?source=installer
 name              = "Nuon Demo Installer"
-description       = "One-click installer for the Nuon Demo App."
+description       = "Installer for the Nuon Demo App."
 documentation_url = "https://docs.nuon.co/quickstart"
 community_url     = "https://nuon-byoc.slack.com/ssb/redirect"
 homepage_url      = "https://nuon.co"
 github_url        = "https://github.com/nuonco"
 logo_url          = "https://nuon.co/_astro/logo.PEcNPe73_Z1ISTvP.svg"
-demo_url          = "https://nuon.co/"
+demo_url          = "https://www.youtube.com/embed/ajYyrTTYmpc?si=2FyF3Sq9bxuKZkfS"
 favicon_url       = "https://nuon.co/_astro/apple-touch-icon.CB8rPL88.png"
 
 # optional fields
 og_image_url          = ""
 copyright_markdown    = "© Nuon 2024"
 footer_markdown       = """
-[Terms of Service](https://nuon.co/terms) | Nuon - BYOC | [github.com/nuon](https://github.com/nuon)"
+[Terms of Service](https://nuon.co/terms) | [Docs](https://docs.nuon.co/get-started/introduction) | [Github][github.com/nuon](https://github.com/nuon)"
 """
 post_install_markdown = """
 # AWS ECS App
@@ -22,4 +22,7 @@ post_install_markdown = """
 
 once live, you can visit clisk this link: [{{nuon.install.sandbox.outputs.public_domain.name}}]({{nuon.install.sandbox.outputs.public_domain.name}})
 """
-apps = ['appp8wgwu816ypus1aadcg875s']
+apps = [
+    'appp8wgwu816ypus1aadcg875s',
+    'apparhowpzogsf4emsproqbutc'
+]
