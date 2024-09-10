@@ -16,11 +16,9 @@ footer_markdown       = """
 [Terms of Service](https://nuon.co/terms) | [Docs](https://docs.nuon.co/get-started/introduction) | [Github][github.com/nuon](https://github.com/nuon)"
 """
 post_install_markdown = """
-# AWS ECS App
+# Demo App
 
-{{.nuon.app.name}} is being deployed to your cloud. Please stand by.
-
-once live, you can visit clisk this link: [{{nuon.install.sandbox.outputs.public_domain.name}}]({{nuon.install.sandbox.outputs.public_domain.name}})
+{{.nuon.app.name}} is being deployed to your cloud. Once it's live, you can see the app running at [{{.nuon.install.inputs.service_name}}.{{.nuon.install.id}}.nuon.run]({{.nuon.install.inputs.service_name}}.{{.nuon.install.id}}.nuon.run)
 """
 apps = [
     'appp8wgwu816ypus1aadcg875s',
