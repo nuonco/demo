@@ -46,14 +46,14 @@ module "ingress" {
       certificate_arn = module.cert.acm_certificate_arn
 
       forward = {
-        target_group_key = "api"
+        target_group_key = var.service_name
       }
     }
   }
 
   target_groups = {
-    api = {
-      name_prefix                       = "api"
+    "${var.service_name}" = {
+      name_prefix                       = var.service_name
       protocol                          = "HTTP"
       backend_port                      = var.container_port
       target_type                       = "ip"
