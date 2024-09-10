@@ -33,4 +33,4 @@ jobs:
         id: release
         run: |
           # for demo, don't loop over apps, and just create releases for one
-          nuon components list -a aws-ecs-app -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
+          nuon components list -a aws-ecs-app -j | jq '.[].id' | xargs -n 1 nuon releases create -a aws-ecs-app --latest-build -c
