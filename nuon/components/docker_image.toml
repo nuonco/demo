@@ -7,4 +7,4 @@ dockerfile = "Dockerfile"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "src/docker-image"
-branch    = "ja/demo-setup"
+branch    = "main"

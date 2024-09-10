@@ -7,7 +7,7 @@ terraform_version = "1.5.3"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "src/ecs-service"
-branch    = "ja/demo-setup"
+branch    = "main"
 
 [vars]
 service_name = "{{.nuon.install.inputs.service_name}}"
