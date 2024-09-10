@@ -8,9 +8,9 @@ defaults:
   run:
     shell: bash
 env:
-  NUON_ORG_ID: ""
-  NUON_API_TOKEN: ""
-  NUON_APP_ID: ""
+  NUON_ORG_ID: ${{ secrets.NUON_ORG_ID }}
+  NUON_API_TOKEN: ${{ secrets.NUON_API_TOKEN }}
+  NUON_APP_ID: ${{ secrets.NUON_APP_ID }}
 
 jobs:
   deploy:
@@ -19,9 +19,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Set up path
-        id: path
-        run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       - name: Install CLI
         id: cli
         run: ./scripts/install.sh
