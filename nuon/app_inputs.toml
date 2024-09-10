@@ -1,6 +1,6 @@
 #:schema https://api.nuon.co/v1/general/config-schema?source=inputs
 [[group]]
-name         = "app"
+name         = "api"
 description  = "Inputs to configure the app that will be deployed."
 display_name = "App Configuration"
 
