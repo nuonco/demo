@@ -8,8 +8,8 @@
 # See https://docs.nuon.co/concepts/apps for more information.
 
 version = "v1"
-description = "AWS ECS Demo Application."
-display_name = "Nuon AWS ECS Demo App"
+description = "Deploy the app in it's own VPC."
+display_name = "Stand-Alone Deployment"
 slack_webhook_url = "https://slack.nuon.co"
 
 # this installer is used for all the apps,

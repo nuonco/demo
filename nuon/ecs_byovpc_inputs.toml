@@ -1,0 +1,13 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=inputs
+[[group]]
+name         = "sandbox"
+description  = "Sandbox inputs"
+display_name = "Sandbox inputs"
+
+[[input]]
+name         = "vpc_id"
+description  = "The VPC to install the app in"
+sensitive    = false
+display_name = "VPC ID"
+required     = true
+group        = "sandbox"

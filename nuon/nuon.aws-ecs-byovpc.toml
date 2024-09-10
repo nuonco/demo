@@ -1,0 +1,38 @@
+#:schema https://api.nuon.co/v1/general/config-schema
+
+# This file contains template values for common Nuon application configuration options.
+# To use it for your app, edit as needed, then rename this file to nuon.aws-ecs-byovpc.toml and run
+#
+#   nuon apps sync -c nuon.aws-ecs-byovpc.toml
+#
+# See https://docs.nuon.co/concepts/apps for more information.
+
+version           = "v1"
+description       = "Deploy the app into a VPC you already have."
+display_name      = "BYOVPC Deployment"
+slack_webhook_url = "https://slack.nuon.co"
+
+[inputs]
+sources = [
+    "app_inputs.toml",
+    "ecs_byovpc_inputs.toml"
+]
+
+[runner]
+runner_type = "aws-ecs"
+
+[sandbox]
+terraform_version = "1.5.4"
+aws_delegation_iam_role_arn = "arn:aws:iam::949309607565:role/aws-ecs-app"
+[sandbox.public_repo]
+directory = "aws-ecs-byovpc"
+repo      = "nuonco/sandboxes"
+branch    = "main"
+[sandbox.vars]
+vpc_id = "{{.nuon.install.inputs.vpc_id}}"
+
+[[components]]
+source = "components/docker_image.toml"
+
+[[components]]
+source = "components/ecs_service.toml"
