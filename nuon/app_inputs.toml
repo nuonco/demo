@@ -1,7 +1,7 @@
 #:schema https://api.nuon.co/v1/general/config-schema?source=inputs
 [[group]]
 name         = "app"
-description  = "Changing this to test the release workflow."
+description  = "Changing this again to test the release workflow."
 display_name = "App Configuration"
 
 [[input]]

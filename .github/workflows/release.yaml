@@ -24,8 +24,13 @@ jobs:
         run: ./scripts/install-cli.sh
       - name: Sync configs
         id: sync
-        run: nuon apps sync --all
+        run: |
+          # run: nuon apps sync --all
+          # for demo, just sync one app so we don't have to wait too long
+          nuon apps sync --file nuon.aws-ecs-app.toml
         working-directory: ./nuon
       - name: Create releases
         id: release
-        run: nuon components list -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
+        run: |
+          # for demo, don't loop over apps, and just create releases for one
+          nuon components list -a aws-ecs-app -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
