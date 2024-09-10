@@ -10,7 +10,7 @@ module "service" {
   memory        = 4096
 
   container_definitions = {
-    api = {
+    "${var.service_name}" = {
       cpu       = 512
       memory    = 1024
       essential = true
@@ -43,8 +43,8 @@ module "service" {
 
   load_balancer = {
     service = {
-      target_group_arn = module.ingress.target_groups["api"].arn
-      container_name   = "api"
+      target_group_arn = module.ingress.target_groups[var.service_name].arn
+      container_name   = var.service_name
       container_port   = var.container_port
     }
   }
