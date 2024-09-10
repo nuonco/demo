@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install CLI
         id: cli
-        run: ./scripts/install.sh
+        run: ./scripts/install-cli.sh
       - name: Sync configs
         id: sync
         run: nuon apps sync --all
