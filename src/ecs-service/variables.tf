@@ -44,3 +44,7 @@ variable "domain_name" {
 variable "zone_id" {
   type = string
 }
+
+variable "new_env_var" {
+  type = string
+}
