@@ -37,6 +37,10 @@ module "service" {
           name  = "NUON_INSTALL_ID"
           value = var.install_id
         },
+        {
+          name  = "NEW_ENV_VAR"
+          value = var.new_env_var
+        },
       ]
     }
   }
