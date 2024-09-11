@@ -18,7 +18,7 @@ footer_markdown       = """
 post_install_markdown = """
 # Demo App
 
-{{.nuon.app.name}} is being deployed to your cloud. Once it's live, you can see the app running at [{{.nuon.install.inputs.service_name}}.{{.nuon.install.id}}.nuon.run]({{.nuon.install.inputs.service_name}}.{{.nuon.install.id}}.nuon.run)
+{{.nuon.app.name}} is being deployed to your cloud. Once it's live, you can see the app running at [{{.nuon.install.inputs.service_name}}.{{.nuon.install.id}}.nuon.run](https://{{.nuon.install.inputs.service_name}}.{{.nuon.install.id}}.nuon.run)
 """
 apps = [
     'appp8wgwu816ypus1aadcg875s',
