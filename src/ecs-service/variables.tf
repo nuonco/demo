@@ -48,3 +48,7 @@ variable "zone_id" {
 variable "new_env_var" {
   type = string
 }
+
+variable "another_new_env_var" {
+  type = string
+}
