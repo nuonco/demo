@@ -41,6 +41,10 @@ module "service" {
           name  = "NEW_ENV_VAR"
           value = var.new_env_var
         },
+        {
+          name  = "ANOTHER_NEW_ENV_VAR"
+          value = var.another_new_env_var
+        },
       ]
     }
   }
