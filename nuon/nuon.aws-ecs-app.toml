@@ -24,7 +24,7 @@ source = "app_inputs.toml"
 runner_type = "aws-ecs"
 
 [sandbox]
-terraform_version = "1.5.4"
+terraform_version = "1.7.5"
 # https://docs.nuon.co/guides/install-access-delegation#setup-delegation
 aws_delegation_iam_role_arn = "arn:aws:iam::949309607565:role/aws-ecs-app"
 [sandbox.public_repo]
@@ -33,7 +33,7 @@ repo      = "nuonco/sandboxes"
 branch    = "main"
 
 [[components]]
-source = "components/docker_image.toml"
+source = "components/ecs_service.toml"
 
 [[components]]
-source = "components/ecs_service.toml"
+source = "components/httpbin.toml"
