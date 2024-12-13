@@ -36,4 +36,4 @@ branch    = "main"
 source = "components/ecs_service.toml"
 
 [[components]]
-source = "components/httpbin.toml"
+source = "components/docker_image.toml"
