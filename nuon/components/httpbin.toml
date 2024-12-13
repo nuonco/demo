@@ -1,9 +1,0 @@
-#:schema https://api.nuon.co/v1/general/config-schema?source=docker_build
-
-name   = "httpbin"
-type   = "container_image"
-
-[public]
-image_url = "kennethreitz/httpbin"
-tag       = "latest"
-
