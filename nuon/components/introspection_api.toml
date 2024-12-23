@@ -1,0 +1,7 @@
+name   = "introspection_api"
+type = "docker_build"
+dockerfile = "Dockerfile"
+[public_repo]
+repo      = "demo"
+directory = "src/introspection-api"
+branch    = "main"

@@ -32,7 +32,7 @@ branch    = "main"
 vpc_id = "{{.nuon.install.inputs.vpc_id}}"
 
 [[components]]
-source = "components/docker_image.toml"
+source = "components/introspection_api.toml"
 
 [[components]]
 source = "components/ecs_service.toml"
