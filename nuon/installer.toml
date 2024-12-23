@@ -22,5 +22,6 @@ post_install_markdown = """
 """
 apps = [
     'appp8wgwu816ypus1aadcg875s',
-    'apparhowpzogsf4emsproqbutc'
+    'apparhowpzogsf4emsproqbutc',
+    'ecs-demo'
 ]
