@@ -33,7 +33,7 @@ repo      = "nuonco/sandboxes"
 branch    = "main"
 
 [[components]]
-source = "components/ecs_service.toml"
+source = "components/container_image.toml"
 
 [[components]]
-source = "components/container_image.toml"
+source = "components/ecs_service.toml"
