@@ -1,0 +1,12 @@
+name   = "helm_chart"
+type = "helm_chart"
+chart_name = "httpbin"
+[public_repo]
+repo      = "nuonco/guides"
+directory = "aws-eks-tutorial/components/helm-chart"
+branch    = "main"
+[values]
+"image.repository" = "{{.nuon.components.httpbin.image.repository.uri}}"
+"image.tag" = "{{.nuon.components.httpbin.image.tag}}"
+"api.nlbs.public_domain_certificate" = "{{.nuon.components.certificate.outputs.public_domain_certificate_arn}}"
+"api.nlbs.public_domain" = "{{.nuon.install.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}}"
