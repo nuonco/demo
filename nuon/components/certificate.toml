@@ -1,0 +1,13 @@
+name   = "certificate"
+type = "terraform_module"
+terraform_version = "1.7.5"
+[public_repo]
+repo      = "nuonco/guides"
+directory = "aws-eks-tutorial/components/certificate"
+branch    = "main"
+[[var]]
+name  = "domain_name"
+value = "{{.nuon.install.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}}"
+[[var]]
+name  = "zone_id"
+value = "{{.nuon.install.sandbox.outputs.public_domain.zone_id}}"

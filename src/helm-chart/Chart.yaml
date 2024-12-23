@@ -1,0 +1,9 @@
+---
+apiVersion: v2
+name: api
+description: A helm chart for running an HTTPS API.
+type: application
+version: v0.0.1
+appVersion: "0.0.1"
+
+dependencies: []

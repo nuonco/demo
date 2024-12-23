@@ -1,0 +1,25 @@
+---
+env:
+
+image:
+  repository: ""
+  tag: ""
+
+serviceAccount:
+  name: api
+  annotations: {}
+
+api:
+  port: 8080
+  readinessProbe: /readyz
+  livenessProbe: /livez
+
+  nlbs:
+    public_domain: ""
+    public_domain_certificate: ""
+
+  autoscaling:
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50

@@ -1,0 +1,27 @@
+#:schema https://api.nuon.co/v1/general/config-schema
+
+version = "v1"
+description = "Deploy an app to EKS in it's own VPC."
+display_name = "Stand-Alone EKS Deployment"
+
+[inputs]
+source = "app_inputs.toml"
+
+[runner]
+runner_type = "aws-eks"
+
+[sandbox]
+terraform_version = "1.7.5"
+[sandbox.public_repo]
+directory = "aws-eks"
+repo      = "nuonco/sandboxes"
+branch    = "main"
+
+[[components]]
+source = "components/container_image.toml"
+
+[[components]]
+source = "components/certificate.toml"
+
+[[components]]
+source = "components/helm_chart.toml"
