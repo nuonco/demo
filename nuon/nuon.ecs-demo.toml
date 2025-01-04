@@ -18,7 +18,7 @@ repo      = "nuonco/sandboxes"
 branch    = "main"
 
 [[components]]
-source = "components/container_image.toml"
+source = "components/introspection_api.toml"
 
 [[components]]
 source = "components/ecs_service.toml"
