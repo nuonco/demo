@@ -11,6 +11,7 @@ defaults:
 env:
   NUON_ORG_ID: ${{ secrets.NUON_ORG_ID }}
   NUON_API_TOKEN: ${{ secrets.NUON_API_TOKEN }}
+  NUON_APP_CONFIG: ${{ secrets.NUON_APP_CONFIG }}
   NUON_APP_ID: ${{ secrets.NUON_APP_ID }}
 
 jobs:
@@ -26,9 +27,7 @@ jobs:
       - name: Sync configs
         id: sync
         run: |
-          # run: nuon apps sync --all
-          # for demo, just sync one app so we don't have to wait too long
-          nuon apps sync --file nuon.aws-ecs-app.toml
+          nuon apps sync --file $NUON_APP_CONFIG
         working-directory: ./nuon
   release:
     runs-on: ubuntu-latest
@@ -43,5 +42,4 @@ jobs:
       - name: Release to installs
         id: release
         run: |
-          # for demo, don't loop over apps, and just create releases for one
-          nuon components list -a aws-ecs-app -j | jq '.[].id' | xargs -n 1 nuon releases create -a aws-ecs-app --latest-build -c
+          nuon components list -a $NUON_APP_ID -j | jq '.[].id' | xargs -n 1 nuon releases create -a $NUON_APP_ID --latest-build -c
