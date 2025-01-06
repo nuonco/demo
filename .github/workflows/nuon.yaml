@@ -11,7 +11,7 @@ defaults:
 env:
   NUON_ORG_ID: ${{ secrets.NUON_ORG_ID }}
   NUON_API_TOKEN: ${{ secrets.NUON_API_TOKEN }}
-  NUON_APP_CONFIG: ${{ secrets.NUON_APP_CONFIG }}
+  NUON_FILE: ${{ secrets.NUON_FILE }}
   NUON_APP_ID: ${{ secrets.NUON_APP_ID }}
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
       - name: Sync configs
         id: sync
         run: |
-          nuon apps sync --file $NUON_APP_CONFIG
+          nuon apps sync
         working-directory: ./nuon
   release:
     runs-on: ubuntu-latest
@@ -42,4 +42,4 @@ jobs:
       - name: Release to installs
         id: release
         run: |
-          nuon components list -a $NUON_APP_ID -j | jq '.[].id' | xargs -n 1 nuon releases create -a $NUON_APP_ID --latest-build -c
+          nuon components list -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
