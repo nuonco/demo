@@ -1,0 +1,33 @@
+#:schema https://api.nuon.co/v1/general/config-schema
+
+version = "v1"
+description = "Deploy an EKS app into a customer VPC."
+display_name = "BYOVPC EKS Deployment"
+
+[inputs]
+sources = [
+    "app_inputs.toml",
+    "sandbox_inputs.toml"
+]
+
+[runner]
+runner_type = "aws-eks"
+
+[sandbox]
+terraform_version = "1.7.5"
+[sandbox.public_repo]
+directory = "aws-eks-byovpc"
+repo      = "nuonco/sandboxes"
+branch    = "main"
+
+# [[components]]
+# source = "components/introspection_api.toml"
+
+[[components]]
+source = "components/httpbin.toml"
+
+[[components]]
+source = "components/certificate.toml"
+
+[[components]]
+source = "components/helm_chart.toml"
