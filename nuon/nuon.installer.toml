@@ -1,0 +1,43 @@
+#:schema https://api.nuon.co/v1/general/config-schema
+
+version = "v1"
+description = "Just here to hold the installer."
+display_name = "Installer"
+
+[runner]
+runner_type = "aws-ecs"
+
+[sandbox]
+terraform_version = "1.7.5"
+[sandbox.public_repo]
+directory = "aws-ecs"
+repo      = "nuonco/sandboxes"
+branch    = "main"
+
+[installer]
+name              = "Nuon Demo Installer"
+description       = "Installer for the Nuon Demo App."
+documentation_url = "https://docs.nuon.co/quickstart"
+community_url     = "https://nuon-byoc.slack.com/ssb/redirect"
+homepage_url      = "https://nuon.co"
+github_url        = "https://github.com/nuonco"
+logo_url          = "data:image/svg+xml,%3Csvg width='58' height='61' viewBox='0 0 58 61' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M38.496 3.01a2.85 2.85 0 0 0-2.85-2.85H3.35A2.85 2.85 0 0 0 .5 3.01v13.3a2.85 2.85 0 0 0 2.85 2.85h32.297a2.85 2.85 0 0 1 2.85 2.85v3.799a2.85 2.85 0 0 1-2.85 2.85H14.749a2.85 2.85 0 0 0-2.85 2.85v13.298a2.85 2.85 0 0 0 2.85 2.85h20.898a2.85 2.85 0 0 1 2.85 2.85v7.599a2.85 2.85 0 0 0 2.849 2.85h13.299a2.85 2.85 0 0 0 2.85-2.85v-13.3a2.85 2.85 0 0 0-2.85-2.85H41.346a2.85 2.85 0 0 1-2.85-2.85v-3.799a2.85 2.85 0 0 1 2.85-2.85h13.299a2.85 2.85 0 0 0 2.85-2.85V16.31a2.85 2.85 0 0 0-2.85-2.85H41.346a2.85 2.85 0 0 1-2.85-2.85z' fill='%23151515'/%3E%3C/svg%3E"
+demo_url          = "https://www.youtube.com/embed/LXoczC247zg?si=0xFLDt77U_97yefn"
+favicon_url       = "https://nuon.co/_astro/apple-touch-icon.CB8rPL88.png"
+
+# optional fields
+og_image_url          = ""
+copyright_markdown    = "© Nuon 2024"
+footer_markdown       = """
+[Terms of Service](https://nuon.co/terms) | [Docs](https://docs.nuon.co/get-started/introduction) | [Github][github.com/nuon](https://github.com/nuon)"
+"""
+post_install_markdown = """
+# Demo App
+
+{{.nuon.app.name}} is being deployed to your cloud. Once it's live, you can see the app running at [{{.nuon.install.inputs.service_name}}.{{.nuon.install.id}}.nuon.run](https://{{.nuon.install.inputs.service_name}}.{{.nuon.install.id}}.nuon.run)
+"""
+apps = [
+    'ecs-demo',
+    'eks-demo',
+    'eks-byovpc-demo'
+]
