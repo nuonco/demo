@@ -17,9 +17,6 @@ directory = "aws-eks"
 repo      = "nuonco/sandboxes"
 branch    = "main"
 
-# [[components]]
-# source = "components/introspection_api.toml"
-
 [[components]]
 source = "components/httpbin.toml"
 

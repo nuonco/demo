@@ -20,9 +20,6 @@ directory = "aws-eks-byovpc"
 repo      = "nuonco/sandboxes"
 branch    = "main"
 
-# [[components]]
-# source = "components/introspection_api.toml"
-
 [[components]]
 source = "components/httpbin.toml"
 
