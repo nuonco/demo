@@ -31,3 +31,19 @@ source = "components/certificate.toml"
 
 [[components]]
 source = "components/helm_chart.toml"
+
+[[actions]]
+name = "k8s_logs"
+
+[[actions.triggers]]
+type = "manual"
+
+[[actions.steps]]
+name = "step"
+[actions.steps.public_repo]
+directory = "src/actions"
+repo = "nuonco/demo"
+branch = "main"
+[actions.steps.env_vars]
+POD = "{{ .nuon.install.inputs.service_name }}"
+NAMESPACE = "{{ .nuon.install.id }}"
