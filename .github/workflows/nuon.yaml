@@ -15,20 +15,20 @@ env:
   NUON_APP_ID: ${{ secrets.NUON_APP_ID }}
 
 jobs:
-  # sync:
-  #   runs-on: ubuntu-latest
-  #   name: Push to Nuon
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-  #     - name: Install CLI
-  #       id: cli
-  #       run: ./scripts/install-cli.sh
-  #     - name: Sync configs
-  #       id: sync
-  #       run: |
-  #         nuon apps sync
-  #       working-directory: ./nuon
+  sync:
+    runs-on: ubuntu-latest
+    name: Push to Nuon
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install CLI
+        id: cli
+        run: ./scripts/install-cli.sh
+      - name: Sync configs
+        id: sync
+        run: |
+          nuon apps sync
+        working-directory: ./nuon
   release:
     runs-on: ubuntu-latest
     name: Release to Customers
