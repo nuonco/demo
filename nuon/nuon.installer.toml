@@ -1,7 +1,7 @@
 #:schema https://api.nuon.co/v1/general/config-schema
 
 version = "v1"
-description = "Just here to hold the installer."
+description = "This app is just here to hold the installer, because we can't put it in it's own config yet."
 display_name = "Installer"
 
 [runner]
