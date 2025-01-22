@@ -41,4 +41,4 @@ jobs:
       - name: Release to installs
         id: release
         run: |
-          nuon apps list -j | jq '.[].id' | xargs -n 1 nuon components list -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
+          nuon apps list -j | jq '.[].id' | xargs -n 1 nuon components list -j | jq -r '.[] | "\(.app_id) \(.id)"' | xargs -n 2 nuon releases create --latest-build -a $1 -c $2
