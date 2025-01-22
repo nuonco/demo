@@ -12,7 +12,6 @@ env:
   NUON_ORG_ID: ${{ secrets.NUON_ORG_ID }}
   NUON_API_TOKEN: ${{ secrets.NUON_API_TOKEN }}
   NUON_FILE: ${{ secrets.NUON_FILE }}
-  NUON_APP_ID: ${{ secrets.NUON_APP_ID }}
 
 jobs:
   sync:
@@ -27,12 +26,12 @@ jobs:
       - name: Sync configs
         id: sync
         run: |
-          nuon apps sync
+          nuon apps sync -all
         working-directory: ./nuon
   release:
     runs-on: ubuntu-latest
     name: Release to Customers
-    # needs: sync
+    needs: sync
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -42,4 +41,4 @@ jobs:
       - name: Release to installs
         id: release
         run: |
-          nuon components list -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
+          nuon apps list -j | jq '.[].id' | xargs -n 1 nuon components list -j | jq '.[].id' | xargs -n 1 nuon releases create --latest-build -c
