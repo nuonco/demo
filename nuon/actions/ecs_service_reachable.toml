@@ -1,0 +1,17 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+
+name = "ecs_service_reachable"
+# description = "Verify that the ECS service is reachable."
+
+[[triggers]]
+type = "manual"
+
+[[triggers]]
+type = "cron"
+cron_schedule = "0 22 * * * ...."
+
+# [[triggers]]
+# type = "post-provision"
+
+# [[triggers]]
+# type = "post-reprovision"

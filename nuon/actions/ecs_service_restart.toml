@@ -1,0 +1,11 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+
+name = "ecs_service_restart"
+# description = "Forcibly restart the ECS service."
+
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name = "restart-service"
+command = "aws ecs update-service --cluster {{.nuon.install.sandbox.cluster_name}} --service {{.nuon.components.ecs_service.name}} --force-new-deployment"

@@ -1,0 +1,11 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+
+name = "ecs_service_health"
+# description = "Check the health of the ECS service."
+
+[[triggers]]
+type = "manual"
+
+[[triggers]]
+type = "cron"
+cron_schedule = "*/5 * * * *"

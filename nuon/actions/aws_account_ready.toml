@@ -1,0 +1,10 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+
+name = "aws_account_ready"
+# description = "Validate that the AWS account is ready for the app to be provisioned."
+
+[[triggers]]
+type = "manual"
+
+[[triggers]]
+# type = "pre-provision"

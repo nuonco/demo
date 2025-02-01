@@ -1,0 +1,11 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+
+name = "kubectl_describe_pod"
+timeout = "0m15s"
+
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name = "kubectl-describe-pod"
+command = "kubectl describe pod $POD_NAME -n {{.nuon.install.id}}"
