@@ -1,0 +1,14 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=inputs
+[[group]]
+name         = "HuggingFace"
+description  = "Hugging Face Inputs"
+display_name = "Hugging Face Inputs"
+
+[[input]]
+name         = "hugging_face_access_token"
+description  = "Hugging Face Access Token"
+default      = ""
+sensitive    = true
+required     = true
+display_name = "Access Token"
+group        = "HuggingFace"

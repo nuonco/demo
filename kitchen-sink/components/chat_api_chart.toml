@@ -1,0 +1,11 @@
+name       = "chat_api"
+type       = "helm_chart"
+chart_name = "chat-api"
+
+[public_repo]
+repo      = "nuonco/demo"
+directory = "kitchen-sink/src/chat-api/helm"
+branch    = "fd/kitchen-sink/migrate-over"
+
+[[values_file]]
+source = "./values/chat_api.values.yaml"

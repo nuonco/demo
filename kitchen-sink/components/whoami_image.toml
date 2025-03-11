@@ -1,0 +1,6 @@
+name   = "whoami_image"
+type   = "container_image"
+
+[public]
+image_url = "traefik/whoami"
+tag       = "v1.10.4"

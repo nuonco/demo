@@ -1,0 +1,23 @@
+name       = "whoami"
+type       = "helm_chart"
+chart_name = "whoami"
+
+[public_repo]
+repo      = "nuonco/demo"
+directory = "kitchen-sink/src/whoami"
+branch    = "fd/kitchen-sink/migrate-over"
+
+[[values_file]]
+contents = """
+namespace: "{{ .nuon.install.id }}"
+
+image:
+  tag: "{{ .nuon.components.whoami_image.image.tag }}"
+  repository: "{{ .nuon.components.whoami_image.image.repository.uri }}"
+
+deployment:
+  containerPort: 8000
+
+service:
+  port: 80
+"""

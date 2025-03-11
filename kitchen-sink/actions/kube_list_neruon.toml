@@ -1,0 +1,20 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+name    = "kubectl_list_neuron"
+timeout = "0m15s"
+
+
+[[triggers]]
+type          = "cron"
+cron_schedule = "*/15 */1 * * *"
+
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name    = "list-neuron"
+command = "./list-neuron"
+
+[steps.public_repo]
+repo      = "nuonco/actions"
+branch    = "main"
+directory = "kube"

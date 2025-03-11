@@ -1,0 +1,6 @@
+name   = "vllm_neuron_image"
+type   = "container_image"
+
+[public]
+image_url = "nuonfred/vllm"
+tag       = "latest"

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deepseek-chatbot
+  namespace: deepseek
+  labels:
+    app: deepseek-chatbot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deepseek-chatbot
+  template:
+    metadata:
+      labels:
+        app: deepseek-chatbot
+    spec:
+      containers:
+      - name: deepseek-chatbot
+        image: "{{ .Values.image.repository}}:{{ .Values.image.tag }}"
+        command: ["/bin/sh", "-c"]
+        args: ["pip install -U pip && pip install -r requirements.txt; sleep 1; python app.py;"]
+        ports:
+        - containerPort: 7860
+        env:
+        - name: ADMIN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: deepseek-chatbot-secrets
+              key: admin-username
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: deepseek-chatbot-secrets
+              key: admin-password
+        - name: MODEL_URLS
+          value: '["http://vllm-deepseek-vllm-chart.deepseek.svc.cluster.local"]'
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"

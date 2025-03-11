@@ -1,0 +1,8 @@
+name       = "chat_ui_image"
+type       = "docker_build"
+dockerfile = "Dockerfile"
+
+[public_repo]
+directory = "chatbot-ui/application"
+repo      = "aws-samples/deepseek-using-vllm-on-eks"
+branch    = "main"

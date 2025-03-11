@@ -1,0 +1,6 @@
+name = "vllm_infr_image"
+type = "container_image"
+
+[public]
+image_url = "kopi/vllm-neuron"
+tag       = "v2"
