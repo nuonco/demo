@@ -11,7 +11,7 @@ readme = """
 </center>
 
 ## Try it!
- - [{{.nuon.install.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}}](https://{{.nuon.install.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}})
+ - [{{.nuon.inputs.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}}](https://{{.nuon.inputs.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}})
 
 ## Instructions to Access the EKS Cluster
 
