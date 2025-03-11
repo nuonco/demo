@@ -25,7 +25,7 @@ aws --region us-west-1 --profile demo.NuonAdmin eks update-kubeconfig --name {{ 
 """
 
 [inputs]
-source = "app_inputs.toml"
+source = "inputs/app.toml"
 
 [runner]
 runner_type = "aws-eks"
@@ -47,17 +47,10 @@ source = "components/certificate.toml"
 source = "components/helm_chart.toml"
 
 [[actions]]
-name = "k8s_logs_copy"
+source = "actions/kubectl_get_pods.toml"
 
-[[actions.triggers]]
-type = "manual"
+[[actions]]
+source = "actions/kubectl_describe_pod.toml"
 
-[[actions.steps]]
-name = "step"
-[actions.steps.public_repo]
-directory = "src/scripts/k8s-logs.sh"
-repo = "nuonco/demo"
-branch = "main"
-[actions.steps.env_vars]
-POD = "{{ .nuon.install.inputs.service_name }}"
-NAMESPACE = "{{ .nuon.install.id }}"
+[[actions]]
+source = "actions/http_healthcheck.toml"

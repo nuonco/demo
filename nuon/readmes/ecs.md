@@ -1,9 +1,3 @@
-#:schema https://api.nuon.co/v1/general/config-schema
-
-version = "v1"
-description = "Deploy HTTPBin on ECS in it's own VPC."
-display_name = "Stand-Alone ECS Deployment"
-readme = """
 <center>
   <img src="data:image/svg+xml,%3Csvg width='66' height='80' viewBox='0 0 32 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20.9943 4L14.8701 7.53672V13.2627L9.91243 10.3983H9.9096L4 13.8107V32.5876L9.90678 36H9.9096L16.2514 32.3362V26.8616L20.9943 29.5989L27.1186 26.0621V7.53672L20.9943 4ZM5.38418 14.6102L9.90678 12H9.9096L14.8672 14.8616V24.4633L5.38418 18.9887V14.6102ZM14.8672 31.5367L9.90678 34.3983L5.38418 31.7881V20.5876L14.8672 26.0621V31.5367ZM25.7345 25.2599L20.9943 27.9972L16.2542 25.2627V15.661L25.7373 21.1356V25.2599H25.7345ZM25.7345 19.5367L16.2514 14.0621V8.33616L20.9943 5.59887L25.7345 8.33616V19.5367Z' fill='url(%23paint0_linear_2003_9746)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_2003_9746' x1='4' y1='32.6723' x2='16.5221' y2='3.03484' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23F72585'/%3E%3Cstop offset='0.53' stop-color='%233A00FF'/%3E%3Cstop offset='1' stop-color='%234CC9F0'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E"/>
   <h1>HTTPBin</h1>
@@ -11,27 +5,5 @@ readme = """
 </center>
 
 ## Try it!
- - [{{.nuon.install.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}}](https://{{.nuon.install.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}})
-"""
 
-[inputs]
-source = "inputs/app.toml"
-
-[runner]
-runner_type = "aws-ecs"
-
-[sandbox]
-terraform_version = "1.7.5"
-[sandbox.public_repo]
-directory = "aws-ecs"
-repo      = "nuonco/sandboxes"
-branch    = "main"
-
-[[components]]
-source = "components/httpbin.toml"
-
-[[components]]
-source = "components/ecs_service.toml"
-[components.vars]
-image_url    = "{{.nuon.components.httpbin.image.repository.uri}}"
-image_tag    = "{{.nuon.components.httpbin.image.tag}}"
+- [{{.nuon.install.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}}](https://{{.nuon.install.inputs.service_name}}.{{.nuon.install.sandbox.outputs.public_domain.name}})
