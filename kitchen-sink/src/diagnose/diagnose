@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+set -u
+
+echo >&2 "diagnosing Nuon app status..."
+
+# Note: this model's context limit is 2048 so we have to only send statuses
+
+# get the clickhouse state
+echo >&2 " - gathering facts..."
+ch_ss=$( kubectl get --namespace default statefulset/chi-chat-api-simple-0-0 -o json | jq -r '.status')
+ch_svc=$(kubectl get --namespace default svc/clickhouse-chat-api             -o json | jq -r '.status')
+ch_chi=$(kubectl get --namespace default chi/chat-api                        -o json | jq -r '.status')
+
+# get the vllm service and deployment features
+echo >&2 " - gathering facts..."
+vllm_dpl=$(kubectl get --namespace deepseek deploy/vllm-deepseek-vllm-chart -o json | jq -r '.status')
+vllm_svc=$(kubectl get --namespace deepseek svc/vllm-deepseek-vllm-chart    -o json | jq -r '.status')
+
+# get the chat_api deployment and service
+echo >&2 " - gathering facts..."
+ca_dpl=$(kubectl get --namespace deepseek deploy/chat-api      -o json | jq -r '.status')
+ca_svc=$(kubectl get --namespace deepseek svc/chat-api-service -o json | jq -r '.status')
+
+prompt="
+I need help diagnosing the health and satus of an application deployed on kubernets.
+The deployment is composed of:
+1. a clickhouse statefulset managed by an operator via a CRD, chi.
+2. a vllm deployment the deploys a deepseek model.
+3. a chat_api that wraps the vllm api and write stats about chat completions to the clickhouse deployments.
+
+Given the kubernetes json statuses for the following:
+1. clickhouse statetfulset, service, and chi.
+2. vllm servide and deployment
+3. chat api deployment and service.
+
+I need you to help me determine:
+1. the health of each component
+2. the status of each component
+3. wether or not the app is in a healthy stae.
+
+If the applicaiton is not in a healthy state, please provide a likely explanation and propose some diagnostic tests.
+
+START: Kubernetes JSON
+Clickhouse:
+
+$ch_ss
+
+$ch_svc
+
+$ch_chi
+
+vllm:
+
+$vllm_dpl
+
+$vllm_svc
+
+Chat API
+
+$ca_dpl
+
+$ca_svc
+END: Kubernetes JSON
+"
+echo "$prompt"
+
+
+payload=`jq --null-input --arg promptContent "$prompt" '{"model": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B","messages": [{"role": "user","content": $promptContent}]}'`
+# NOTE(fd): use localhost:9021 - for testing w/ kubectl port-forward
+response=$(curl -X POST http://chat-api-service.deepseek.svc.cluster.local/api/v1/chat/completions -H "Content-Type: application/json" --data "$payload")
+
+outputs=`jq --null-input --argjson responseContent "$response" '{"response": $responseContent}'`
+echo $response >> $NUON_ACTIONS_OUTPUT_FILEPATH

@@ -1,0 +1,64 @@
+name              = "clickhouse_db"
+type              = "terraform_module"
+terraform_version = "1.10.4"
+
+[public_repo]
+repo      = "nuonco/components"
+directory = "aws/kubectl-manifest"
+branch    = "main"
+
+[vars]
+install_name = "{{.nuon.install.id}}"
+cluster_name = "{{.nuon.install.sandbox.outputs.cluster.name}}"
+iam_role_arn = "{{.nuon.install.sandbox.outputs.runner.runner_iam_role_arn}}"
+yaml_body = """
+apiVersion: "clickhouse.altinity.com/v1"
+kind: "ClickHouseInstallation"
+metadata:
+  name: "chat-api"
+spec:
+  defaults:
+    templates:
+      dataVolumeClaimTemplate: data-volume-template
+      podTemplate: default
+  configuration:
+    clusters:
+      - name: "simple"
+        layout:
+          shardsCount: 1
+          replicasCount: 1
+    users:
+      chat_api/password_sha256_hex: 88bfa7105a1301a307e71a1f22473035bd2f6385d88ad549901ea5b20e50fff6
+      chat_api/allow_databases/database:
+        - "chat_api"
+      chat_api/networks/ip:
+        - 0.0.0.0/0
+  templates:
+    volumeClaimTemplates:
+      - name: data-volume-template
+        spec:
+          storageClassName: "gp2"
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 2Gi
+    podTemplates:
+      - name: default
+        spec:
+          volumes:
+            - name: initdb-volume
+              configMap:
+                name: clickhouse-initdb-schema
+                defaultMode: "365"
+          containers:
+            - name: clickhouse
+              image: clickhouse/clickhouse-server:latest
+              env:
+                - name: CLICKHOUSE_ALWAYS_RUN_INITDB_SCRIPTS
+                  value: "true"
+              volumeMounts:
+                - name: initdb-volume
+                  mountPath: /docker-entrypoint-initdb.d
+                  readOnly: true
+"""

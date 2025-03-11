@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+set -u
+
+namespace="$NAMESPACE"
+deployment="$DEPLOYMENT"
+replicas="$REPLICAS"
+echo >&2 "scaling deployment..."
+
+kubectl scale --namespace $namespace --replicas $replicas deployment/$deployment
+
+sleep 15
+
+deployment_status=`kubectl get --namespace $namespace deployment $deployment -o json | jq '.status'`
+
+outputs=`jq --null-input --argjson statusContent "$deployment_status" '{"status": $statusContent}'`
+echo $outputs >> $NUON_ACTIONS_OUTPUT_FILEPATH

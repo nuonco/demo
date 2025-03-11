@@ -1,0 +1,11 @@
+name       = "aws_neuron_plugin"
+type       = "helm_chart"
+chart_name = "aws-neuron"
+
+[public_repo]
+repo      = "nuonco/demo"
+directory = "kitchen-sink/src/neuron-helm-chart"
+branch    = "fd/kitchen-sink/migrate-over"
+
+[[values_file]]
+source = "./values/aws_neuron_plugin.values.yaml"

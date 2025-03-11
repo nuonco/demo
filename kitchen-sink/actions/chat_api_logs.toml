@@ -1,0 +1,19 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+name    = "chat_api_logs"
+timeout = "2m0s"
+
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name    = "chat-api-logs"
+command = "./deployment-logs"
+
+[steps.public_repo]
+repo      = "nuonco/actions"
+directory = "kube"
+branch    = "fd/new-actions/logs"
+
+[steps.env_vars]
+DEPLOYMENT_NAME      = "chat-api"
+DEPLOYMENT_NAMESPACE = "deepseek"

@@ -1,0 +1,593 @@
+# This file contains template values for common Nuon application configuration options.
+# To use it for your app, edit as needed, then rename this file to nuon.kitchen-sink.toml and run
+#
+#   nuon apps sync -c nuon.kitchen-sink.toml
+#
+# See https://docs.nuon.co/concepts/apps for more information.
+
+version           = "v1"
+description       = "Fully featured demo app that runs on EKS."
+display_name      = "Kitchen Sink"
+slack_webhook_url = "https://slack.nuon.co"
+readme = """
+<center>
+    <div>
+        <img width="72" src="https://mintlify.s3-us-west-1.amazonaws.com/nuoninc/logo/dark.svg"/>
+    </div>
+    <div>
+        <h2>Nuon: Fully Featured Application</h2>
+    </div>
+    <p>
+        A relatively simple inference application in an EKS Cluster in your VPC.
+    </p>
+    <small>
+      AWS | {{ dig "account" "id" "000000000000" .nuon.sandbox.outputs  }} | {{ dig "account" "region" "xx-vvvv-00" .nuon.sandbox.outputs }} | {{ dig "vpc" "id" "vpc-000000" .nuon.sandbox.outputs }}
+    </small>
+
+{{ $sbColor := (ternary "green" "red" (eq .nuon.sandbox.status "active")) }}
+<img src="https://img.shields.io/badge/{{ .nuon.sandbox.status }}-{{ $sbColor }}?label=Sandbox"/>
+</center>
+
+<hr>
+
+## Demo
+
+| Component         | Link                                                                                                                         |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Chat App          | [https://chat.{{.nuon.sandbox.outputs.public_domain.name}}](https://chat.{{.nuon.sandbox.outputs.public_domain.name}})       |
+| Deepseek via vLLM | [https://ds.{{.nuon.sandbox.outputs.public_domain.name}}/docs](https://ds.{{.nuon.sandbox.outputs.public_domain.name}}/docs) |
+
+- username: admin
+- password: c4f3b60c99c94f2fb18bf3e0557599e4674db53b93e9c30a
+
+## Sandbox
+
+The sandbox is an
+[open source terraform module](https://github.com/nuonco/terraform-aws-eks-sandbox/tree/fd/feat/karpenter-sandbox)
+that sets up:
+
+- a vpc
+- an eks cluster
+- one managed nodegroups
+- karpenter w/ a default EC2NodeClass and Nodepool
+- a handful of core helm charts
+
+{{ if .nuon.sandbox.outputs }}
+| Name | Launch Template ID | LT Version | Status | Taints |
+| ---- | ------------------ | ---------- | ------ | ------ |
+{{- range $ngName, $ng := .nuon.sandbox.outputs.cluster.eks_managed_node_groups }}
+| `{{ $ngName }}` | `{{ $ng.launch_template_id }}` | `{{$ng.launch_template_latest_version}}` | {{$ng.node_group_status}} | `{{ len $ng.node_group_taints }}` |
+{{- end }}
+{{ end }}
+
+<details open="true">
+<summary>[Kube List Node Action]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.kubectl_list_nodes.id}}) Output</summary>
+<pre>
+{{ if .nuon.actions.workflows.kubectl_list_nodes.outputs }}
+{{ dig "content" "no content" .nuon.actions.workflows.kubectl_list_nodes.outputs }}
+{{ else }}
+⏳ Waiting on action...
+{{ end }}
+</pre>
+</details>
+
+<details open="true">
+<summary>[Kube List Neruon Action]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.kubectl_list_neuron.id}}) Output</summary>
+<pre>
+{{ if .nuon.actions.workflows.kubectl_list_neuron.outputs }}
+{{ dig "content" "no content" .nuon.actions.workflows.kubectl_list_neuron.outputs }}
+{{ else }}
+⏳ Waiting on action...
+{{ end }}
+</pre>
+</details>
+
+<details open="true">
+<summary>[Kube List Nodepools Action]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.kubectl_list_nodepools.id}}) Output</summary>
+<pre>
+{{ if .nuon.actions.workflows.kubectl_list_nodepools.outputs }}
+{{ dig "content" "no content" .nuon.actions.workflows.kubectl_list_nodepools.outputs }}
+{{ else }}
+⏳ Waiting on action...
+{{ end }}
+</pre>
+</details>
+
+And configures the cluster with some core addons and helm charts such as:
+
+- ebs csi
+- external-dns
+- alb-ingress
+- ingress-nginx
+
+The sandbox is the first "component" of sorts and is the base upon which all
+other components are built.
+
+<details>
+<summary>Sandbox Outputs</summary>
+<pre>
+{{ if .nuon.sandbox.populated }}
+{{ toPrettyJson .nuon.sandbox.outputs }}
+{{ end }}
+</pre>
+</details>
+
+<hr/>
+
+## Infra Components
+
+### [RDS Subnet]({{.nuon.install.id}}/components/{{.nuon.components.components.rds_subnet.install_component_id}})
+
+The `rds_subnet.toml` terraform component creates an RDS subnet group for use by
+RDS resources. It is created as a standalone terraform module in order to make
+it easy to mange and re-use it across different RDS resources. This de-coupling
+makes it simpler to bundle changes into modular releases, a theme you will see
+repeated throughout this configuration.
+
+<details>
+<summary>RDS Subnet Outputs</summary>
+<pre>
+{{ if .nuon.components.components.rds_subnet.outputs }}
+{{ toPrettyJson (default "{}" .nuon.components.components.rds_subnet.outputs) }}
+{{ end }}
+</pre>
+</details>
+
+### [RDS Cluster]({{.nuon.install.id}}/components/{{.nuon.components.components.rds_cluster.install_component_id}})
+
+A simple RDS Cluster that takes inputs from the `RDS Subnet` terraform
+component.
+
+<details>
+<summary>RDS Cluster Outputs</summary>
+<pre>
+{{ if .nuon.components.components.rds_cluster.outputs }}
+{{ toPrettyJson (default "{}" .nuon.components.components.rds_cluster.outputs) }}
+{{ end }}
+</pre>
+</details>
+
+<hr/>
+
+## Cluster Level Dependencies
+
+### Secrets Operator
+
+It is recommended secrets are kept out of outputs. To that end, the RDS cluster
+uses an AWS managed password which is stored in Secret Manager. These secrets
+can be read with the [External Secrets](https://charts.external-secrets.io/).
+This dependency is managed via two components. One for the CRDs (terraform) and
+one for the k8s resources (helm). This enables use to explicitly manage CRD
+versions which is important when it comes time to apply updates.
+
+- [`external_secrets_crds`]({{.nuon.install.id}}/components/{{.nuon.components.components.external_secrets_crds.install_component_id}})
+- [`external_secrets`]({{.nuon.install.id}}/components/{{.nuon.components.components.external_secrets.install_component_id}})
+
+### Clickhouse Operator
+
+We deploy the
+[`altinity/clickhouse-operator`](https://github.com/Altinity/clickhouse-operator/)
+which makes it easy to deploy clickhouse instances.
+
+- [`clickhouse_operator`]({{.nuon.install.id}}/components/{{.nuon.components.components.clickhouse_operator.install_component_id}})
+- [`clickhouse_operator`]({{.nuon.install.id}}/components/{{.nuon.components.components.clickhouse_operator.install_component_id}})
+
+<hr>
+
+## Images
+
+Docker images are copied into an install-specific ECR. In this demo, we copy an
+image from a docker hub for use by one of our inference services using the
+[`container_image`](https://docs.nuon.co/guides/container-image-components#container-image-components)
+component.
+
+<details>
+<summary>[`vllm_neuron_image`]({{.nuon.install.id}}/components/{{.nuon.components.components.vllm_neuron_image.install_component_id}}) image for `aws.amazon.com/neuron`</summary>
+
+<pre>
+{{ if .nuon.components.components.vllm_neuron_image.populated }}
+{{ toPrettyJson .nuon.components.components.vllm_neuron_image }}
+{{ else }}
+⏳ waiting on image
+{{ end }}
+</pre>
+</details>
+
+And we also build an image from a github repo via the
+[`docker_build`](https://docs.nuon.co/guides/docker-build-components#docker-build-components)
+component type. This method is possible, but we encourage the use of the method
+above.
+
+<details>
+<summary>[`chat_ui_image`]({{.nuon.install.id}}/components/{{.nuon.components.components.chat_ui_image.install_component_id}}) image for ui</summary>
+<pre>
+{{ if .nuon.components.components.chat_ui_image.populated }}
+{{ toPrettyJson .nuon.components.components.chat_ui_image }}
+{{ else }}
+⏳ waiting on image
+{{ end }}
+</pre>
+</details>
+
+<hr/>
+
+## Workloads
+
+### Stateless Workloads
+
+#### Whoami
+
+Stateless services are a breeze. We deploy a simple service and make use of
+several [nuon components](https://github.com/nuonco/components).
+
+- Simple
+  [whoami]({{.nuon.install.id}}/components/{{.nuon.components.components.whoami.install_component_id}})
+  Server
+- [AWS ALB Ingress]({{.nuon.install.id}}/components/{{.nuon.components.components.alb.install_component_id}})
+  ([link](https://chat.{{.nuon.sandbox.outputs.public_domain.name}}))
+
+- [Wildcard Certificate]({{.nuon.install.id}}/components/{{.nuon.components.components.wildcard_certificate.install_component_id}})
+
+We support wildcard and sub/domain ACM certs. Out of the box, the sandboxes
+support a nuon provided `nuon.run` domain for your application.
+
+### [Deepseek Chat UI]({{.nuon.install.id}}/components/{{.nuon.components.components.deepseek_chat_ui.install_component_id}})
+
+Simple helm deployment. Uses the
+[`chat_ui_image`]({{.nuon.install.id}}/components/{{.nuon.components.components.chat_ui_image.install_component_id}}).
+Deploys an ALB Ingress from within its own chart, not using the nuon component.
+Uses the wildcart certificate.
+
+- deployment
+- service
+- ingress + alb
+  ([link](https://chat.{{.nuon.sandbox.outputs.public_domain.name}}/))
+
+Helm chart components include the ingresses, services, and deployments in their
+outputs.
+
+<details>
+<summary>Outputs</summary>
+<pre>
+{{ if .nuon.components.components.deepseek_chat_ui.outputs }}
+{{ toPrettyJson .nuon.components.components.deepseek_chat_ui.outputs }}
+{{ else }}
+⏳ waiting on deploy
+{{ end }}
+</pre>
+</details>
+
+### Stateful Workloads
+
+#### Clickhouse
+
+We use the clickhouse operator to stand up a single node clickhouse db.
+
+- [clickhouse_db]({{.nuon.install.id}}/components/{{.nuon.components.components.clickhouse_db.install_component_id}}) -
+  Simple CH Instance
+
+<details>
+<summary>CH DB Outputs</summary>
+<pre>
+{{ if .nuon.components.components.clickhouse_db.outputs }}
+{{ toPrettyJson .nuon.components.components.clickhouse_db.outputs }}
+{{ else }}
+⏳ waiting on deploy
+{{ end }}
+</pre>
+</details>
+
+### [Chat API Proxy]({{.nuon.install.id}}/components/{{.nuon.components.components.chat_api.install_component_id}})
+
+A simple python api that proxies requests to the `vllm` deployment and stores
+llm details in clickhouse.
+
+This is intended to be used from within the cluster, but it can be access
+locally like this:
+
+```bash
+kubectl port-forward svc/chat-api-service -n deepseek 9021:9021
+curl -X POST http://localhost:9021/api/v1/chat/completions -H "Content-Type: application/json" --data '{
+  "max_tokens": 512,
+  "model": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Why is the sky blue?"
+    }
+  ]
+}'
+```
+
+<details>
+<summary>Chat API Outputs</summary>
+<pre>
+{{ if .nuon.components.components.chat_api.outputs }}
+{{ toPrettyJson .nuon.components.components.chat_api.outputs }}
+{{ else }}
+⏳ waiting on deploy
+{{ end }}
+</pre>
+</details>
+
+### Inference Workloads
+
+#### [DeepSeek-R1-Distill-Llama-8B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B) running on aws inf2 instances.
+
+- deployment
+- service
+- ingress + alb
+  ([link](https://ds.{{.nuon.sandbox.outputs.public_domain.name}}/docs))
+
+<hr/>
+
+## Actions
+
+### [Simple HTTP Healthcheck]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.whoami_http_healthcheck.id}})
+
+This action runs a simple http healthcheck on the `whoami` alb using
+[a nuon action](https://github.com/nuonco/actions/blob/main/common/healthcheck).
+
+{{ if .nuon.actions.workflows.whoami_http_healthcheck.outputs }}
+{{ $whoami_http_badge_color := ternary "green" "red" (eq .nuon.actions.workflows.whoami_http_healthcheck.outputs.success "true") }}
+{{ $whoami_http_badge := print "https://img.shields.io/badge/" .nuon.actions.workflows.whoami_http_healthcheck.outputs.status_code "-" $whoami_http_badge_color "?label=Status%20Code" }}
+| Status | Details | | ------ | ------- | |
+{{ dig  "indicator" "🟡" .nuon.actions.workflows.whoami_http_healthcheck.outputs }}
+| https://whoami.{{ .nuon.install.id }}.nuon.run |
+
+Note: You can make badges
+
+<img src="{{$whoami_http_badge}}"/>
+{{ else }}
+⏳ Waiting on action...
+{{ end }}
+
+<details>
+<summary>Healtcheck Action Outputs</summary>
+<pre>
+{{ if .nuon.actions.workflows.whoami_http_healthcheck.outputs }}
+{{ toPrettyJson (dig "outputs" "{}" .nuon.actions.workflows.whoami_http_healthcheck) }}
+{{ end }}
+</pre>
+</details>
+
+### Re-starting Deployments
+
+Actions can be used to assess service state.
+
+Here is an action that checks a deployment status
+
+Here is an action,
+([deployment-restart]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.kubectl_deployment_restart.id}})),
+that restarts deployments.
+
+{{ if  .nuon.actions.workflows.kubectl_deployment_restart.outputs }} **Available
+Replicas**:
+{{ dig "post" "status" "availableReplicas" "?" .nuon.actions.workflows.kubectl_deployment_restart.outputs }}
+{{ end }}
+
+<details>
+<summary>Kube Deployment Restart Outputs</summary>
+<pre>
+{{ if  .nuon.actions.workflows.kubectl_deployment_restart.outputs }}
+{{ toPrettyJson .nuon.actions.workflows.kubectl_deployment_restart.outputs }}
+{{ else }}
+⏳ Waiting on action...
+{{ end }}
+</pre>
+</details>
+
+### [Diagnose]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.diagnose.id}}) app status w/ an LLM
+
+To tie everything together, we have made an action that pulls some statuses from
+the kubernetes cluster using `kubectl` and passes these to the deepseek llm in a
+prompt to diagnose the status of the app.
+
+{{ if .nuon.actions.workflows.diagnose.outputs }}
+
+<details>
+<summary>Diagnosis</summary>
+{{ if .nuon.actions.workflows.diagnose.outputs.choices }}
+{{ $choice := index .nuon.actions.workflows.diagnose.outputs.choices 0 }}
+<p>
+
+{{ $choice.message.content }}
+
+</p>
+{{ else}}
+Something went wrong. Check the action.
+{{ end}}
+</details>
+{{ else }}
+⏳ Waiting on action...
+{{ end }}
+
+<hr/>
+
+## Configuring Custom DNS
+
+If you want to configure custom DNS, you can use the
+[nuon alb component]({{.nuon.install.id}}/components/{{.nuon.components.components.alb.install_component_id}}),
+or bake your own, and use it's outputs or an action,
+[like this one](https://github.com/nuonco/actions/blob/main/aws/alb-healthcheck),
+to polls its state and populate a readme. The example below uses our nuon alb
+healthcheck action.
+
+{{ if .nuon.actions.workflows.whoami_alb_healthcheck.outputs }}
+{{ $ingressLB :=  (index .nuon.actions.workflows.whoami_alb_healthcheck.outputs "status" "loadBalancer" "ingress" 0 "hostname" ) }}
+
+- Load Balancer URL: `{{ $ingressLB }}`
+
+Create a CNAME record pointing your desired domain to your alb ALB. e.g.
+
+```txt
+whoami.your-subdomain.example.com => {{ $ingressLB }}
+```
+{{ else }}
+```
+⏳ Waiting on load balancer...
+```
+{{ end }}
+
+<details>
+<summary>Full Action Output</summary>
+<pre>
+{{ if .nuon.actions.workflows.whoami_alb_healthcheck.outputs }}
+{{ toPrettyJson .nuon.actions.workflows.whoami_alb_healthcheck.outputs }}
+{{ else }}
+⏳ Waiting on action execution...
+{{ end }}
+</pre>
+</details>
+
+<hr/>
+
+## Developer Access to EKS
+
+1. Add an access entry for the relevant role.
+2. Grant the following perms: `AWSEKSAdmin`, `AWSClusterAdmin`
+3. Add the cluster kubeconfig w/ the following command.
+4. Use your tool of choice to access the cluster (`kubectl` or `k9s`).
+
+```bash
+{{ if .nuon.sandbox.outputs }}
+aws --region {{ dig "outputs" "account" "region" "xx-vvvv-00" .nuon.sandbox  }} --profile test.NuonAdmin eks update-kubeconfig --name {{ .nuon.install.id }} --alias {{ .nuon.install.id }}
+{{ else }}
+lol
+{{ end }}
+```
+
+```bash
+kubectl config use-context {{.nuon.install.id}}
+kubectl get --namespace {{.nuon.install.id}} deployments -o wide
+```
+"""
+
+[sandbox]
+source = "./sandbox-eks.toml"
+
+[runner]
+runner_type = "aws-eks"
+
+[installer]
+source = "./installer.toml"
+
+#
+# Component s
+#
+
+# infra: network components
+[[components]]
+source = "./components/rds_subnet.toml"
+
+[[components]]
+source = "./components/nodeclass_neuron.toml"
+
+[[components]]
+source = "./components/nodepool_neuron.toml"
+
+[[components]]
+source = "./components/aws_neuron_plugin.toml"
+
+# cluster-level: eks helm charts
+[[components]]
+source = "./components/external_secrets_crds.toml"
+
+[[components]]
+source = "./components/external_secrets.toml"
+
+# operator
+[[components]]
+source = "./components/clickhouse_operator.toml"
+
+# infra: databases
+# depends on rds subnet
+[[components]]
+source = "./components/rds_cluster.toml"
+
+[[components]]
+source = "./components/clickhouse_init_script.toml"
+
+[[components]]
+source = "./components/clickhouse_db.toml"
+
+# DNS: Certificates
+[[components]]
+source = "./components/wildcard_certificate.toml"
+
+# workloads: stateless
+[[components]]
+source = "./components/whoami_image.toml"
+
+[[components]]
+source = "./components/whoami.toml"
+
+[[components]]
+source = "./components/alb.toml"
+
+# images and docker builds
+[[components]]
+source = "./components/chat_ui_image.toml"
+
+[[components]]
+source = "./components/chat_api_image.toml"
+
+[[components]]
+source = "./components/vllm_neuron_image.toml"
+
+# namespace: expected by all the components that follow
+[[components]]
+source = "./components/deepseek_namespace.toml"
+
+# workload: stateful - clickhouse
+[[components]]
+source = "./components/chat_api_chart.toml"
+
+# workload: stateless: chat ui
+[[components]]
+source = "./components/chat_ui_chart.toml"
+
+# note: order - here for now because we can't just redeploy deepseek on account of how long it takes
+[[components]]
+source = "./components/alb_deepseek.toml"
+
+# workloads: gpu/inference
+[[components]]
+source = "./components/vllm_deepseek.toml"
+
+#
+# Actions
+#
+
+[[actions]]
+source = "./actions/whoami_http_healthcheck.toml"
+
+[[actions]]
+source = "./actions/whoami_alb_healthcheck.toml"
+
+[[actions]]
+source = "./actions/kube_list_nodes.toml"
+
+[[actions]]
+source = "./actions/kube_list_neruon.toml"
+
+[[actions]]
+source = "./actions/kube_list_nodepools.toml"
+
+[[actions]]
+source = "./actions/kube_deployment_restart.toml"
+
+[[actions]]
+source = "./actions/diagnose.toml"
+
+[[actions]]
+source = "./actions/deployment_scale.toml"
+
+[[actions]]
+source = "./actions/vllm_logs.toml"
+
+[[actions]]
+source = "./actions/chat_api_logs.toml"
+
+[[actions]]
+source = "./actions/cloudwatch.toml"

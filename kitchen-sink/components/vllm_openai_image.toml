@@ -1,0 +1,6 @@
+name   = "vllm_openai_image"
+type   = "container_image"
+
+[public]
+image_url = "vllm/vllm-openai"
+tag       = "v0.7.2"

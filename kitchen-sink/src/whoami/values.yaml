@@ -1,0 +1,11 @@
+namespace: ""
+
+image:
+  repository: ""
+  tag: ""
+
+deployment:
+  containerPort: 8000
+
+service:
+  port: 80

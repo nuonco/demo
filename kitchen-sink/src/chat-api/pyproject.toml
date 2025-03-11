@@ -1,0 +1,15 @@
+[project]
+name = "chat-api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "clickhouse-connect>=0.8.15",
+    "clickhouse-driver>=0.2.9",
+    "httpx>=0.28.1",
+    "orjson>=3.10.15",
+    "python-environ>=0.4.54",
+    "sanic>=24.12.0",
+    "svix-ksuid>=0.6.2",
+]
