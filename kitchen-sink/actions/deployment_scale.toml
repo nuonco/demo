@@ -12,7 +12,7 @@ command = "./deployment_scale"
 [steps.public_repo]
 repo      = "nuonco/demo"
 directory = "kitchen-sink/src/deployment_scale"
-branch    = "fd/kitchen-sink/migrate-over"
+branch    = "main"
 
 [steps.env_vars]
 DEPLOYMENT = "vllm-deepseek-vllm-chart"

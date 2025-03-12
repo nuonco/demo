@@ -5,7 +5,7 @@ chart_name = "aws-neuron"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "kitchen-sink/src/neuron-helm-chart"
-branch    = "fd/kitchen-sink/migrate-over"
+branch    = "main"
 
 [[values_file]]
 source = "./values/aws_neuron_plugin.values.yaml"

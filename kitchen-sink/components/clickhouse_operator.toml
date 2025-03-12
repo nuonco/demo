@@ -5,7 +5,7 @@ terraform_version = "1.10.4"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "kitchen-sink/src/clickhouse_operator"
-branch    = "fd/kitchen-sink/migrate-over"
+branch    = "main"
 
 [vars]
 cluster_name     = "{{.nuon.install.sandbox.outputs.cluster.name}}"
