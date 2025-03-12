@@ -12,7 +12,7 @@ command = "./deployment-logs"
 [steps.public_repo]
 repo      = "nuonco/actions"
 directory = "kube"
-branch    = "fd/new-actions/logs"
+branch    = "main"
 
 [steps.env_vars]
 DEPLOYMENT_NAME      = "vllm-deepseek-vllm-chart"
