@@ -114,6 +114,20 @@ other components are built.
 
 <hr/>
 
+## Components
+
+<details>
+<summary>All Components</summary>
+{{ if .nuon.components.populated }}
+| Component | Status |
+| --------- | ------ |
+{{- range $name, $component := .nuon.components.components }}
+| {{ $name }} | `{{ $component.status }}` |
+{{- end }}
+{{ end }}
+</details>
+
+
 ## Infra Components
 
 ### [RDS Subnet]({{.nuon.install.id}}/components/{{.nuon.components.components.rds_subnet.install_component_id}})
@@ -310,6 +324,21 @@ curl -X POST http://localhost:9021/api/v1/chat/completions -H "Content-Type: app
 </pre>
 </details>
 
+{{ if and .nuon.actions.populated .nuon.actions.workflows.chat_api_logs.populated }}
+<details>
+<summary>[Chat Logs]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.chat_api_logs.id}}) Action Outputs</summary>
+
+<pre>
+{{ if .nuon.actions.workflows.chat_api_logs.outputs }}
+{{ .nuon.actions.workflows.chat_api_logs.outputs.logs }}
+{{ else }}
+⏳ waiting on action
+{{ end }}
+</pre>
+
+</details>
+{{ end }}
+
 ### Inference Workloads
 
 #### [DeepSeek-R1-Distill-Llama-8B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B) running on aws inf2 instances.
@@ -331,9 +360,9 @@ This action runs a simple http healthcheck on the `whoami` alb using
 {{ if .nuon.actions.workflows.whoami_http_healthcheck.outputs }}
 {{ $whoami_http_badge_color := ternary "green" "red" (eq .nuon.actions.workflows.whoami_http_healthcheck.outputs.success "true") }}
 {{ $whoami_http_badge := print "https://img.shields.io/badge/" .nuon.actions.workflows.whoami_http_healthcheck.outputs.status_code "-" $whoami_http_badge_color "?label=Status%20Code" }}
-| Status | Details | | ------ | ------- | |
-{{ dig  "indicator" "🟡" .nuon.actions.workflows.whoami_http_healthcheck.outputs }}
-| https://whoami.{{ .nuon.install.id }}.nuon.run |
+| Status | Details |
+| ------ | ------- |
+| {{ dig  "indicator" "🟡" .nuon.actions.workflows.whoami_http_healthcheck.outputs }} | https://whoami.{{ .nuon.install.id }}.nuon.run |
 
 Note: You can make badges
 
