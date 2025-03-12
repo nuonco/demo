@@ -12,4 +12,4 @@ command = "./diagnose"
 [steps.public_repo]
 repo      = "nuonco/demo"
 directory = "kitchen-sink/src/diagnose"
-branch    = "fd/kitchen-sink/migrate-over"
+branch    = "main"

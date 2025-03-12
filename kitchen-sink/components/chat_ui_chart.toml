@@ -5,7 +5,7 @@ chart_name = "deepseek-chat-ui"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "kitchen-sink/src/chat-ui"
-branch    = "fd/kitchen-sink/migrate-over"
+branch    = "main"
 
 [[values_file]]
 source = "./values/deepseek_chat_ui.values.yaml"
