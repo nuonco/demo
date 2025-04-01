@@ -352,6 +352,19 @@ curl -X POST http://localhost:9021/api/v1/chat/completions -H "Content-Type: app
 
 ## Actions
 
+### [Gen Secrets]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.gen_secrets.id}})
+
+This action runs before a deploy and is responsible for creating a secret in SecretsManager.
+
+
+{{ if .nuon.actions.workflows.gen_secrets.outputs }}
+⏳ Waiting on action...
+{{ else }}
+<pre>
+{{ .nuon.actions.workflows.gen_secrets.outputs }}
+</pre>
+{{ end }}
+
 ### [Simple HTTP Healthcheck]({{.nuon.install.id}}/actions/{{.nuon.actions.workflows.whoami_http_healthcheck.id}})
 
 This action runs a simple http healthcheck on the `whoami` alb using
@@ -620,3 +633,6 @@ source = "./actions/chat_api_logs.toml"
 
 [[actions]]
 source = "./actions/cloudwatch.toml"
+
+[[actions]]
+source = "./actions/gen_secrets.toml"
