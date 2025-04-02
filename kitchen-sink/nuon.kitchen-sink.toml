@@ -34,6 +34,7 @@ readme = """
 
 | Component         | Link                                                                                                                         |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Whoami            | [https://whoami.{{.nuon.sandbox.outputs.public_domain.name}}](https://whoami.{{.nuon.sandbox.outputs.public_domain.name}})   |
 | Chat App          | [https://chat.{{.nuon.sandbox.outputs.public_domain.name}}](https://chat.{{.nuon.sandbox.outputs.public_domain.name}})       |
 | Deepseek via vLLM | [https://ds.{{.nuon.sandbox.outputs.public_domain.name}}/docs](https://ds.{{.nuon.sandbox.outputs.public_domain.name}}/docs) |
 
@@ -330,7 +331,7 @@ curl -X POST http://localhost:9021/api/v1/chat/completions -H "Content-Type: app
 
 <pre>
 {{ if .nuon.actions.workflows.chat_api_logs.outputs }}
-{{ .nuon.actions.workflows.chat_api_logs.outputs.logs }}
+{{ dig "logs" "no logs" .nuon.actions.workflows.chat_api_logs.outputs }}
 {{ else }}
 ⏳ waiting on action
 {{ end }}
