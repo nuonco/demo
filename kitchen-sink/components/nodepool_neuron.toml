@@ -50,7 +50,7 @@ spec:
       - key: topology.kubernetes.io/zone
         operator: In
         values:
-        - us-east-2a
-        - us-east-2b
-        - us-east-2c
+        - {{ .nuon.install.sandbox.outputs.account.region }}a
+        - {{ .nuon.install.sandbox.outputs.account.region }}b
+        - {{ .nuon.install.sandbox.outputs.account.region }}c
 """
