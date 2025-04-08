@@ -1,8 +1,8 @@
 #:schema https://api.nuon.co/v1/general/config-schema?source=inputs
 [[group]]
 name         = "HuggingFace"
-description  = "Hugging Face Inputs"
-display_name = "Hugging Face Inputs"
+description  = "Hugging Face Configuration"
+display_name = "Hugging Face Configuration"
 
 [[input]]
 name         = "hugging_face_access_token"
@@ -12,3 +12,26 @@ sensitive    = true
 required     = true
 display_name = "Access Token"
 group        = "HuggingFace"
+
+[[group]]
+name         = "RDS"
+display_name = "AWS RDS Cluster Configuration"
+description  = "Inputs for the configuration of the AWS RDS PG Cluster. The username/password are managed by AWS in a Secret."
+
+[[input]]
+name         = "instance_class"
+description  = "What intance class for this db cluster?"
+default      = "db.t4g.micro"
+sensitive    = false
+required     = true
+display_name = "Instance Class"
+group        = "RDS"
+
+[[input]]
+name         = "db_name"
+description  = "What should the name of the database be?"
+default      = "production"
+sensitive    = false
+required     = true
+display_name = "Database Name"
+group        = "RDS"
