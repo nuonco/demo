@@ -5,7 +5,7 @@ terraform_version = "1.10.4"
 
 [public_repo]
 repo      = "nuonco/components"
-directory = "aws/rds_subnet"
+directory = "aws/rds-subnet"
 branch    = "main"
 
 [vars]
