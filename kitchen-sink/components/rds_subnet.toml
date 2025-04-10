@@ -4,8 +4,8 @@ type              = "terraform_module"
 terraform_version = "1.10.4"
 
 [public_repo]
-repo      = "nuonco/demo"
-directory = "kitchen-sink/src/rds_subnet"
+repo      = "nuonco/components"
+directory = "aws/rds_subnet"
 branch    = "main"
 
 [vars]
