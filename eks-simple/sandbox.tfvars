@@ -14,3 +14,9 @@ maintenance_role_eks_access_entry_policy_associations = {
 }
 
 additional_namespaces = ["whoami"]
+
+maintenance_cluster_role_rules_override = [{
+  "apiGroups" = ["*"]
+  "resources" = ["*"]
+  "verbs"     = ["*"]
+}]
