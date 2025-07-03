@@ -5,6 +5,9 @@ image:
   tag: "latest"
   repository: "traefik/whoami"
 
+whoami:
+  name: {{ .nuon.inputs.inputs.name }}
+
 deployment:
   containerPort: 8000
 
