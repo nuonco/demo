@@ -17,8 +17,10 @@ spec:
     spec:
       containers:
       - name: whoami
-        image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         env:
+        - name: "WHOAMI_NAME"
+          value: "{{ .Values.whoami.nuon }}"
         - name: "WHOAMI_PORT_NUMBER"
           value: "{{ .Values.deployment.containerPort }}"
         ports:

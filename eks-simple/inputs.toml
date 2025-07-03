@@ -1,12 +1,19 @@
 #:schema https://api.nuon.co/v1/general/config-schema?source=inputs
 [[group]]
-name         = "dns"
-description  = "DNS Configrations"
-display_name = "Configurations for the root domain for Route53"
+name         = "whoami"
+description  = "configuration for whoami service"
+display_name = "Whoami Config"
 
 [[input]]
-name         = "root_domain"
-description  = "The root domain. Services will be made available at subdomains of this root domain."
-default      = "byoc.for.everyone.example.com"
-display_name = "Root Domain"
-group        = "dns"
+name         = "name"
+description  = "--name flag for whoami"
+default      = "whoami"
+display_name = "name"
+group        = "whoami"
+
+[[input]]
+name         = "subdomain"
+description  = "Subdomain where whoami service will be served."
+default      = "whoami"
+display_name = "Subdomain"
+group        = "whoami"
