@@ -6,7 +6,9 @@ repo      = "nuonco/aws-eks-sandbox"
 branch    = "main"
 
 [vars]
-cluster_name         = "n-{{.nuon.install.id}}"
+cluster_version = "1.33"
+cluster_name    = "s-{{.nuon.install.id}}"
+
 enable_nuon_dns      = "true"
 public_root_domain   = "{{.nuon.install.id}}.nuon.run"
 internal_root_domain = "{{.nuon.install.id}}.internal.nuon.run"
