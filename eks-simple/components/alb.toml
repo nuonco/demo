@@ -2,6 +2,7 @@ type         = "helm_chart"
 name         = "application_load_balancer"
 chart_name   = "application-load-balancer"
 namespace    = "whoami"
+storage_driver = "configmap"
 dependencies = ["whoami"]
 
 [public_repo]
