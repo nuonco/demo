@@ -14,3 +14,7 @@ maintenance_role_eks_access_entry_policy_associations = {
 }
 
 additional_namespaces = ["whoami"]
+
+additional_tags = {
+  "app.nuon.co/name": "eks-simple"
+}
