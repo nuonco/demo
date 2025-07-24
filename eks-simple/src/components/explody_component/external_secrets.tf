@@ -26,8 +26,9 @@ locals {
 }
 
 resource "kubectl_manifest" "external_secrets_crds" {
-  for_each  = local.all_es_manifests
-  yaml_body = each.value
+  for_each          = local.all_es_manifests
+  server_side_apply = true
+  yaml_body         = each.value
 }
 
 # helm releAse
