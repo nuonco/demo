@@ -1,0 +1,20 @@
+name              = "explody_component"
+type              = "terraform_module"
+terraform_version = "1.11.3"
+
+[public_repo]
+repo      = "nuonco/demo"
+directory = "eks-simple/src/components/explody_component"
+branch    = "fd/text/explody-component"
+
+[vars]
+cluster_name                       = "{{ .nuon.install.sandbox.outputs.cluster.name }}"
+cluster_endpoint                   = "{{ .nuon.install.sandbox.outputs.cluster.endpoint }}"
+cluster_certificate_authority_data = "{{ .nuon.install.sandbox.outputs.cluster.certificate_authority_data }}"
+region                             = "{{ .nuon.install_stack.outputs.region }}"
+
+install_name = "{{ .nuon.install.name }}"
+install_id   = "{{ .nuon.install.id }}"
+
+datadog_api_key = "dne"
+datadog_app_key = "dne"
