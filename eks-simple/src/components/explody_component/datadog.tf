@@ -5,8 +5,8 @@ locals {
 }
 
 resource "helm_release" "datadog" {
-  name             = local.name
-  namespace        = local.namespace
+  name             = "datadog"
+  namespace        = "datadog"
   create_namespace = true
 
   repository = "https://helm.datadoghq.com"

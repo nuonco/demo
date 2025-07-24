@@ -32,8 +32,8 @@ resource "kubectl_manifest" "external_secrets_crds" {
 
 # helm releAse
 resource "helm_release" "external_secrets" {
-  name             = local.name
-  namespace        = local.namespace
+  name             = "external-secrets"
+  namespace        = "external-secrets"
   create_namespace = true
   skip_crds        = true
 
