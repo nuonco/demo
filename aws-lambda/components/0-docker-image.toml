@@ -7,4 +7,4 @@ dockerfile = "Dockerfile"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "aws-lambda/src/components/api"
-branch    = "fd/new-demo/aws-lambda"
+branch    = "main"

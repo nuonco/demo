@@ -7,7 +7,7 @@ dependencies      = ["dynamodb_table"]
 [public_repo]
 repo      = "nuonco/demo"
 directory = "aws-lambda/src/components/lambda-function"
-branch    = "fd/new-demo/aws-lambda"
+branch    = "main"
 
 [vars]
 install_id         = "{{.nuon.install.id}}"

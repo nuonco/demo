@@ -6,7 +6,7 @@ terraform_version = "1.11.4"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "aws-lambda/src/components/certificate"
-branch    = "fd/new-demo/aws-lambda"
+branch    = "main"
 
 [vars]
 zone_id     = "{{.nuon.install.sandbox.outputs.nuon_dns.public_domain.zone_id}}"
