@@ -21,7 +21,7 @@ module "api_gateway" {
 
   # Routes & Integration(s)
   routes = {
-    "GET /widgets" = {
+    "GET /widgets/:id" = {
       integration = {
         uri                    = var.lambda_function_arn
         payload_format_version = "2.0"
