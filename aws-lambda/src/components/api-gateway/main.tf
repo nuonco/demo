@@ -22,7 +22,7 @@ module "api_gateway" {
 
   # Routes & Integration(s)
   routes = {
-    "GET /widgets/:id" = {
+    "GET /widgets/{id}" = {
       integration = {
         uri                    = var.lambda_function_arn
         payload_format_version = "2.0"
@@ -35,12 +35,6 @@ module "api_gateway" {
         uri                    = var.lambda_function_arn
         payload_format_version = "2.0"
         timeout_milliseconds   = 12000
-      }
-    }
-
-    "$default" = {
-      integration = {
-        uri = "arn:aws:lambda:eu-west-1:052235179155:function:my-default-function"
       }
     }
   }
