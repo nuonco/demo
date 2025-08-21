@@ -12,6 +12,6 @@ branch    = "main"
 [vars]
 install_id         = "{{.nuon.install.id}}"
 region             = "{{.nuon.sandbox.outputs.account.region}}"
-function_name      = "widgets"
+function_name      = "widgets-{{.nuon.install.id}}"
 image_uri          = "{{.nuon.components.docker_image.outputs.image.repository}}:{{.nuon.components.docker_image.outputs.image.tag}}"
 dynamodb_table_arn = "{{.nuon.components.dynamodb_table.outputs.dynamodb_table_arn}}"

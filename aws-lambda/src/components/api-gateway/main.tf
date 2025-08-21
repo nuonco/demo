@@ -11,6 +11,7 @@ module "api_gateway" {
 
   stage_access_log_settings = {
     create_log_group = true
+    log_group_name   = "${var.name}-${var.install_id}"
   }
 
   stage_default_route_settings = {
