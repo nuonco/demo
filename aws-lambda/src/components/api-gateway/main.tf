@@ -11,6 +11,7 @@ module "api_gateway" {
 
   stage_access_log_settings = {
     create_log_group = true
+    log_group_name   = "${var.name}-${var.install_id}"
   }
 
   stage_default_route_settings = {
@@ -21,7 +22,7 @@ module "api_gateway" {
 
   # Routes & Integration(s)
   routes = {
-    "GET /widgets" = {
+    "GET /widgets/:id" = {
       integration = {
         uri                    = var.lambda_function_arn
         payload_format_version = "2.0"

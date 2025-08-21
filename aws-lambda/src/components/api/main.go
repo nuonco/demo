@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -14,6 +15,7 @@ import (
 )
 
 var logger = logging.DefaultLogger
+var table = os.Getenv("TABLE")
 
 func response(statusCode int, body string, err error) (events.APIGatewayProxyResponse, error) {
 	if err != nil {
@@ -33,7 +35,7 @@ func get(event events.APIGatewayV2HTTPRequest) (events.APIGatewayProxyResponse, 
 		return response(http.StatusBadRequest, "", err)
 	}
 
-	widget, err := dynamodb.GetItem(id, "widgets")
+	widget, err := dynamodb.GetItem(id, table)
 	if err != nil {
 		return response(http.StatusInternalServerError, "", err)
 	}
@@ -60,7 +62,7 @@ func post(event events.APIGatewayV2HTTPRequest) (events.APIGatewayProxyResponse,
 		return response(http.StatusBadRequest, "", err)
 	}
 
-	err = dynamodb.PutItem(w.ID, "widgets")
+	err = dynamodb.PutItem(w.ID, table)
 	if err != nil {
 		return response(http.StatusInternalServerError, "", err)
 	}

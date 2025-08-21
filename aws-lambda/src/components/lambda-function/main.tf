@@ -7,6 +7,10 @@ module "lambda_function" {
   package_type   = "Image"
   create_package = false
 
+  environment_variables = {
+    TABLE = "widgets-${var.install_id}"
+  }
+
   cloudwatch_logs_retention_in_days = 3
   logging_log_group                 = "/aws/lambda/${var.install_id}/${var.function_name}"
 

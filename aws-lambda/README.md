@@ -17,7 +17,7 @@ vpc-000000 {{ end }}
 ```bash
 curl -X POST https://{{.nuon.components.api_gateway.outputs.api_gateway.domain_name_id}}/widgets \
      -H Content-Type:"application/json" \
-     -d {"id":"7"}
+     -d '{"id":"7"}'
 ```
 
 ### Get a record

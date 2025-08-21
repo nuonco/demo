@@ -9,7 +9,7 @@ directory = "aws-lambda/src/components/dynamodb-table"
 branch    = "main"
 
 [vars]
-name       = "widgets"
+name       = "widgets-{{.nuon.install.id}}"
 hash_key   = "ID"
 install_id = "{{.nuon.install.id}}"
 region     = "{{.nuon.install_stack.outputs.region}}"
