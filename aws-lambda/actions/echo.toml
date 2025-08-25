@@ -1,0 +1,20 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+name    = "echo"
+timeout = "5s"
+
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name = "echo"
+inline_contents = """
+#!/usr/bin/env sh
+echo "region=$AWS_REGION"
+echo "foo=$FOO"
+results='{"region": "'$AWS_REGION'", "foo": "'$FOO'"}'
+echo $results | jq
+echo $results >> $NUON_ACTIONS_OUTPUT_FILEPATH
+"""
+
+[steps.env_vars]
+FOO = "bar"
