@@ -1,0 +1,24 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+name    = "describe_certificate"
+timeout = "5s"
+
+[[triggers]]
+type           = "post-component-deploy"
+component_name = "certificate"
+index          = 1
+
+[[steps]]
+name = "describe_certificate_post"
+inline_contents = """
+#!/usr/bin/env sh
+
+export AWS_PAGER=""
+result=`aws --region $AWS_REGION acm describe-certificate --certificate-arn $CERTIFICATE_ARN | jq -c`
+
+echo $result | jq
+
+echo $result >> $NUON_ACTIONS_OUTPUT_FILEPATH
+"""
+
+[steps.env_vars]
+CERTIFICATE_ARN = "{{ .nuon.components.certificate.outputs.public_domain_certificate_arn}}"

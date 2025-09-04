@@ -1,0 +1,21 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+name    = "list_certificates_pre"
+timeout = "5s"
+
+[[triggers]]
+type           = "pre-component-deploy"
+component_name = "certificate"
+index          = 1
+
+[[steps]]
+name = "list_certificate_pre"
+inline_contents = """
+#!/usr/bin/env sh
+
+export AWS_PAGER=""
+result=`aws --region $AWS_REGION acm list-certificates | jq -c`
+
+echo $result | jq
+
+echo $result >> $NUON_ACTIONS_OUTPUT_FILEPATH
+"""
