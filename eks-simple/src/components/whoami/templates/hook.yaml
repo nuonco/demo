@@ -1,0 +1,21 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: whoami-startup
+  namespace: {{ .Values.namespace | default .Release.Namespace | quote }}
+  labels:
+    app: whoami
+spec:
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: whoami-startup-hook
+          image: "bash:5.3.3"
+          command:
+            - /usr/local/bin/bash -c
+            - "echo 'started up: '`date`; for j in {1..10}; do echo '['$j']' `date` && sleep 1; done"
