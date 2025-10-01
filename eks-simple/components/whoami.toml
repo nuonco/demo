@@ -8,7 +8,7 @@ storage_driver = "configmap"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "eks-simple/src/components/whoami"
-branch    = "main"
+branch    = "fd/startup-webhook"
 
 [[values_file]]
 contents = "./values/whoami.yaml"
