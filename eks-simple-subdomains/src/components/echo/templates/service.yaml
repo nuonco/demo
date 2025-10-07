@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo
+  namespace: {{ .Values.namespace | default .Release.Namespace | quote }}
+spec:
+  ports:
+  - name: http-echo
+    port: {{ .Values.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.deployment.containerPort }}
+  selector:
+    app: echo
+  sessionAffinity: None
+  type: ClusterIP

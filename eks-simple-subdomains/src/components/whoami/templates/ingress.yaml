@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: ""
+    external-dns.alpha.kubernetes.io/ingress-hostname-source: "annotation-only"
+  name: whoami
+  namespace: whoami
+spec:
+  rules:
+  - host: whoami.{{ .Values.domain }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: whoami
+            port:
+              number: {{ .Values.service.port }}
+  ingressClassName: nginx

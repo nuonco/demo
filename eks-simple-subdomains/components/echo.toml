@@ -1,0 +1,14 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=helm
+name           = "echo_server"
+type           = "helm_chart"
+chart_name     = "echo-server"
+namespace      = "echo"
+storage_driver = "configmap"
+
+[public_repo]
+repo      = "nuonco/demo"
+directory = "eks-simple-subdomains/src/components/echo"
+branch    = "fd/eks-simple/subdomains-example"
+
+[[values_file]]
+contents = "./values/echo.yaml"
