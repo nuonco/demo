@@ -1,0 +1,12 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=inputs
+[[group]]
+name         = "noop"
+description  = "NOOP configs. these do nothing."
+display_name = "noop"
+
+[[input]]
+group        = "noop"
+name         = "foo"
+default      = "bar"
+display_name = "FOO"
+description  = "please provide a value for foo"

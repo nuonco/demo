@@ -1,0 +1,17 @@
+type         = "helm_chart"
+name         = "ingress_nginx_alb"
+chart_name   = "ingress-nginx-alb"
+namespace    = "ingress-nginx"
+
+[public_repo]
+repo      = "nuonco/components"
+branch    = "main"
+directory = "aws/alb"
+
+[values]
+domain_certificate = "{{ .nuon.components.certificate.outputs.public_domain_certificate_arn }}"
+domain             = "*.{{ .nuon.install.sandbox.outputs.nuon_dns.public_domain.name }}"
+https_port         = "443"
+service_name       = "ingress-nginx-controller"
+service_port       = "80"
+install_name       = "{{ .nuon.install.id }}"
