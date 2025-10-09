@@ -1,0 +1,30 @@
+name: Deploy with Nuon
+
+on:
+  push:
+    branches: main
+    paths:
+      - "*"
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+env:
+  NUON_ORG_ID: ${{ secrets.NUON_ORG_ID }}
+  NUON_API_TOKEN: ${{ secrets.NUON_API_TOKEN }}
+  NUON_FILE: ${{ secrets.NUON_FILE }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Nuon
+        uses: nuonco/actions-nuon@v1
+        with:
+          org_id: dne
+          api_token: dne
+          app_id: dne
+          command: 'version'
