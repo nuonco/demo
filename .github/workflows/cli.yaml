@@ -1,4 +1,4 @@
-name: Deploy with Nuon
+name: Nuon
 
 on:
   push:
@@ -23,8 +23,9 @@ jobs:
 
       - name: Deploy to Nuon
         uses: nuonco/actions-nuon@v1
+
         with:
           org_id: dne
           api_token: dne
           app_id: dne
-          command: 'version'
+          command: "version"
