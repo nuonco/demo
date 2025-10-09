@@ -1,14 +1,14 @@
 [[role]]
-name = "sandbox_break_glass"
-description = "grant access to the sandbox"
-display_name = "Sandbox Break Glass"
+name                 = "{{ .nuon.install.id }}-eks-simple-break-glass"
+description          = "grant access to the sandbox for install {{ .nuon.install.id }}"
+display_name         = "Sandbox Break Glass for Install {{ .nuon.install.id }}"
 permissions_boundary = ""
 
 [[role.policies]]
 managed_policy_name = "AdministratorAccess"
 
 [[role.policies]]
-name = "remove-secrets-manager"
+name = "{{ .nuon.install.id }}-remove-secrets-manager"
 contents = """
 {
     "Version": "2012-10-17",
