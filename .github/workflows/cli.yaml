@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Deploy to Nuon
-        uses: nuonco/actions-nuon@v1
+        uses: nuonco/actions-nuon@fd/initial-attempt
 
         with:
           org_id: dne
