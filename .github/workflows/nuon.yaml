@@ -1,3 +1,4 @@
+name: sync
 on:
   push:
     branches: main
@@ -17,28 +18,11 @@ env:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    name: Push to Nuon
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install CLI
-        id: cli
-        run: ./scripts/install-cli.sh
-      - name: Sync configs
-        id: sync
-        run: |
-          nuon apps sync --all
-        working-directory: ./nuon
-  release:
-    runs-on: ubuntu-latest
     name: Release to Customers
     needs: sync
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Install CLI
-        id: cli
-        run: ./scripts/install-cli.sh
       - name: sync eks-simple
         uses: nuonco/actions-nuon@v1
         with:
