@@ -40,7 +40,7 @@ jobs:
         id: cli
         run: ./scripts/install-cli.sh
       - name: sync eks-simple
-        uses: nuonco/actions-nuon@fd/initial-attempt
+        uses: nuonco/actions-nuon@v1
         with:
           org_id: ${{ secrets.NUON_ORG_ID }}
           api_token: ${{ secrets.NUON_API_TOKEN }}
@@ -48,7 +48,7 @@ jobs:
           app_id: appnvpbof1axn6lhgnaj7gd87o
           command: "apps sync eks-simple"
       - name: sync eks-simple-subdomains
-        uses: nuonco/actions-nuon@fd/initial-attempt
+        uses: nuonco/actions-nuon@v1
         with:
           org_id: ${{ secrets.NUON_ORG_ID }}
           api_token: ${{ secrets.NUON_API_TOKEN }}
