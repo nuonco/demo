@@ -16,26 +16,34 @@ env:
   NUON_FILE: ${{ secrets.NUON_FILE }}
 
 jobs:
-  sync:
+  sync_eks_simple:
     runs-on: ubuntu-latest
-    name: Release to Customers
-    needs: sync
+    name: "Sync: EKS Simple"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: sync eks-simple
-        uses: nuonco/actions-nuon@v1
+        uses: nuonco/actions-nuon@v0.0.2
+        working-directory: ./eks-simple
         with:
-          org_id: ${{ secrets.NUON_ORG_ID }}
+          org_id: org0hch9mndcthau44pz2lsfui
           api_token: ${{ secrets.NUON_API_TOKEN }}
           api_url: "https://api.nuon.co"
           app_id: appnvpbof1axn6lhgnaj7gd87o
-          command: "apps sync eks-simple"
+          command: "apps sync"
+
+  sync_eks_simple_subdomains:
+    runs-on: ubuntu-latest
+    name: "Sync: EKS Simple Subdomains"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: sync eks-simple-subdomains
-        uses: nuonco/actions-nuon@v1
+        uses: nuonco/actions-nuon@v0.0.2
+        working-directory: ./eks-simple-subdomains
         with:
-          org_id: ${{ secrets.NUON_ORG_ID }}
+          org_id: org0hch9mndcthau44pz2lsfui
           api_token: ${{ secrets.NUON_API_TOKEN }}
           api_url: "https://api.nuon.co"
           app_id: appa2hoi075j3qwvm99k83hpc6
-          command: "apps sync eks-simple-subdomains"
+          command: "apps sync"
