@@ -28,6 +28,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: clickhosue
+                name: clickhouse
                 port:
                   name: http

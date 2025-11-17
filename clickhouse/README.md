@@ -12,8 +12,8 @@ AWS | 000000000000 | xx-vvvv-00 | vpc-000000
   </small>
 </center>
 
-A simple app config with a clickhouse db on a private subnet + tailscale for access. Deploys a simple cluster with two
-replicas and one shard.
+A simple app config is for a simple cluster with two replicas and one shard, a 3-node keeper cluster, and a ui. The
+cluster and UI are made publicly accessible for the purposes of this demo.
 
 {{ if and .nuon.install_stack.populated }}
 
