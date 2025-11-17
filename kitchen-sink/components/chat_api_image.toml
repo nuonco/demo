@@ -1,8 +1,0 @@
-name       = "chat_api_image"
-type       = "docker_build"
-dockerfile = "Dockerfile"
-
-[public_repo]
-repo      = "nuonco/demo"
-directory = "kitchen-sink/src/chat-api"
-branch    = "main"

@@ -1,7 +1,0 @@
-image:
-  tag: "{{ .nuon.components.chat_ui_image.image.tag }}"
-  repository: "{{ .nuon.components.chat_ui_image.image.repository.uri }}"
-
-ingress:
-  domain_certificate: "{{.nuon.components.wildcard_certificate.outputs.public_domain_certificate_arn}}"
-  domain: "chat.{{.nuon.install.sandbox.outputs.public_domain.name}}"

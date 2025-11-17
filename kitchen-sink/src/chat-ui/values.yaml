@@ -1,7 +1,0 @@
-image:
-  tag: ""
-  repository: ""
-
-ingress:
-  domain_certificate: ""
-  domain: ""
