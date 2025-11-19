@@ -7,7 +7,7 @@ drift_schedule = "0 0 * * *"
 [public_repo]
 repo      = "nuonco/demo"
 directory = "data-ops/src/components/rds_cluster_temporal"
-branch    = "fd/new-demo/data-ops"
+branch    = "main"
 
 [vars]
 identifier      = "temporal-{{ .nuon.install.id }}"
