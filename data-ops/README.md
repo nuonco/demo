@@ -77,6 +77,7 @@ We also deploy a clickhouse ui which, for the purposes of this demonstration, is
 |        |                                                                                                                                     |
 | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
 | Events | [https://{{ .nuon.inputs.inputs.datadog_site }}/event/explorer?query=kube_cluster%3A{{ .nuon.install.sandbox.outputs.cluster.name }}](https://{{ .nuon.inputs.inputs.datadog_site }}/event/explorer?query=kube_cluster%3A{{ .nuon.install.sandbox.outputs.cluster.name }}) |
+| Logs | [https://{{ .nuon.inputs.inputs.datadog_site }}/logs?=cluster_name%3A{{ .nuon.install.sandbox.outputs.cluster.name }}](https://{{ .nuon.inputs.inputs.datadog_site }}/logs?query=cluster_name%3A{{ .nuon.install.sandbox.outputs.cluster.name }}) |N
 <!-- prettier-ignore-end -->
 
 {{ else }}
