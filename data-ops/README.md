@@ -12,7 +12,12 @@ AWS | 000000000000 | xx-vvvv-00 | vpc-000000
   </small>
 </center>
 
-Cllickhouse Cluster, Temporal, and Tailscale w/ DataDog.
+<center>
+A sample applicatoin with Cllickhouse Cluster, Temporal Cluster, Tailscale Operator, DataDog Operator, and examplel
+Temporal AI Agent.
+</center>
+
+![Screenshot](https://github.com/nuonco/demo/blob/main/screenshots/data-ops.png?raw=true)
 
 {{ if and .nuon.install_stack.populated }}
 
