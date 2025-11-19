@@ -94,6 +94,11 @@ We also deploy a clickhouse ui which, for the purposes of this demonstration, is
 
 This app config includes a full temporal cluster and an RDS DB for persitence and visibility.
 
+### Temporal AI Agent
+
+We deploy the `temporal-ai-agent` app from the temporal demo modified to run on k8s. This is not a producton ready
+application and is not intended to be exposed to the open internet.
+
 ### Datadog
 
 We deploy the datadog operator and create a datadog agent to monitor the cluster and send logs.
