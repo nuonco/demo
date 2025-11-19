@@ -35,20 +35,11 @@ Cllickhouse Cluster, Temporal, and Tailscale w/ DataDog.
 
 {{ end }}
 
-<details>
-<summary>Full Template</summary>
-{{ $template := .nuon.install_stack.template_json | fromJson }}
-<pre>{{ $template | toPrettyJson }}</pre>
-</details>
-{{ else }}
-No install stack configured.
-{{ end }}
+{{ else }} No install stack configured. {{ end }}
 
-## Components
+## Getting Started
 
-### Tailscale
-
-This demo deploys the tailscale kuberentes operator. Before getting started, ensure the following:
+If you would like to use Tailscale to expose your services (recommended), ensure the following:
 
 1. MagicDNS is enabled on your tailnet.
 2. HTTPS is enabled on your tailnet.
@@ -57,39 +48,15 @@ This demo deploys the tailscale kuberentes operator. Before getting started, ens
 
 See docs here: https://tailscale.com/kb/1236/kubernetes-operator
 
-### Clickhouse
+The tailnet is automatically configured by the operator. We use an action
+[`ts_tailnet`](./{{.nuon.install.id}}/actions/{{.nuon.actions.workflows.ts_tailnet.id}}) to retrieve the address to the
+tailnet for use in other components.
 
-This demo deploys a 2-node replicated clickhouse cluster and a corresponding 3-node keeper cluster to support
-replication. The clickhouse cluster is controlled by a ClickHouseInstallation (chi) CRD deployed in the
-`clickhouse-installation` namespace. The keepers are controlled by a `ClickHouseKeeper` (chk) CRD deployed in the
-`clickhouse-keeper` namespace. The installation and keepers are given their own nodepool to reduce the likelihood of
-resource contention.
+## Components
 
-We also deploy a clickhouse ui which, for the purposes of this demonstration, is made public.
+### Tailscale
 
-### Temporal
-
-### Datadog
-
-{{ if ne .nuon.inputs.inputs.datadog_site "" }}
-
-<!-- prettier-ignore-start -->
-|        |                                                                                                                                     |
-| ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Events | [https://{{ .nuon.inputs.inputs.datadog_site }}/event/explorer?query=kube_cluster%3A{{ .nuon.install.sandbox.outputs.cluster.name }}](https://{{ .nuon.inputs.inputs.datadog_site }}/event/explorer?query=kube_cluster%3A{{ .nuon.install.sandbox.outputs.cluster.name }}) |
-| Logs | [https://{{ .nuon.inputs.inputs.datadog_site }}/logs?=cluster_name%3A{{ .nuon.install.sandbox.outputs.cluster.name }}](https://{{ .nuon.inputs.inputs.datadog_site }}/logs?query=cluster_name%3A{{ .nuon.install.sandbox.outputs.cluster.name }}) |N
-<!-- prettier-ignore-end -->
-
-{{ else }}
-
-Datadog is not enabled. If you'dl ike to enable datadog:
-
-1. set a value for the inpug: `datadog_site`
-2. reprovision the install and provide values for the following
-   - datadog_api_key
-   - datadog_app_key
-
-{{ end }}
+We deploy the tailscale operator and make use of it extensively to expose services via `Ingress`es.
 
 ### Services on the Tailnet
 
@@ -110,6 +77,44 @@ Datadog is not enabled. If you'dl ike to enable datadog:
 ... one sec ...
 
 Ensure this action has run: [`ts_tailnet`](./{{.nuon.install.id}}/actions/{{.nuon.actions.workflows.ts_tailnet.id}})
+
+{{ end }}
+
+### Clickhouse
+
+This demo deploys a 2-node replicated clickhouse cluster and a corresponding 3-node keeper cluster to support
+replication. The clickhouse cluster is controlled by a ClickHouseInstallation (chi) CRD deployed in the
+`clickhouse-installation` namespace. The keepers are controlled by a `ClickHouseKeeper` (chk) CRD deployed in the
+`clickhouse-keeper` namespace. The installation and keepers are given their own nodepool to reduce the likelihood of
+resource contention.
+
+We also deploy a clickhouse ui which, for the purposes of this demonstration, is made public.
+
+### Temporal
+
+This app config includes a full temporal cluster and an RDS DB for persitence and visibility.
+
+### Datadog
+
+We deploy the datadog operator and create a datadog agent to monitor the cluster and send logs.
+
+{{ if ne .nuon.inputs.inputs.datadog_site "" }}
+
+<!-- prettier-ignore-start -->
+|        |                                                                                                                                     |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Events | [https://{{ .nuon.inputs.inputs.datadog_site }}/event/explorer?query=kube_cluster%3A{{ .nuon.install.sandbox.outputs.cluster.name }}](https://{{ .nuon.inputs.inputs.datadog_site }}/event/explorer?query=kube_cluster%3A{{ .nuon.install.sandbox.outputs.cluster.name }}) |
+| Logs | [https://{{ .nuon.inputs.inputs.datadog_site }}/logs?=cluster_name%3A{{ .nuon.install.sandbox.outputs.cluster.name }}](https://{{ .nuon.inputs.inputs.datadog_site }}/logs?query=cluster_name%3A{{ .nuon.install.sandbox.outputs.cluster.name }}) |N
+<!-- prettier-ignore-end -->
+
+{{ else }}
+
+Datadog is not enabled. If you'dl ike to enable datadog:
+
+1. set a value for the inpug: `datadog_site`
+2. reprovision the install and provide values for the following
+   - datadog_api_key
+   - datadog_app_key
 
 {{ end }}
 
