@@ -1,0 +1,15 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+name = "image"
+
+# TODO: this can be a cron.
+# ideally it would run after the builder finishes but we don't have a good way to hook into that rn.
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name            = "list"
+inline_contents = "./src/image-list.sh"
+
+[steps.env_vars]
+AWS_REGION = "{{ .nuon.install_stack.outputs.region }}"
+REPO       = "{{ .nuon.components.repository.outputs.repository_name }}"

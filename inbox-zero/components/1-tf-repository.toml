@@ -1,0 +1,14 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=terraform
+name              = "repository"
+type              = "terraform_module"
+terraform_version = "1.13.5"
+
+[public_repo]
+repo      = "nuonco/demo"
+directory = "inbox-zero/src/repository"
+branch    = "fd/new-demo/inbox-zero"
+
+[vars]
+region          = "{{ .nuon.install_stack.outputs.region }}"
+nuon_install_id = "{{ .nuon.install.id }}"
+repository_name = "inbox-zero"

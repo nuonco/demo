@@ -1,0 +1,27 @@
+#:schema https://api.nuon.co/v1/general/config-schema?type=terraform
+name              = "builder"
+type              = "terraform_module"
+terraform_version = "1.13.5"
+
+[public_repo]
+repo      = "nuonco/demo"
+branch    = "fd/new-demo/inbox-zero"
+directory = "inbox-zero/src/builder"
+
+[vars]
+region          = "{{ .nuon.install_stack.outputs.region }}"
+vpc_id          = "{{ .nuon.install_stack.outputs.vpc_id }}"
+nuon_install_id = "{{ .nuon.install.id }}"
+
+cluster_id = "{{ .nuon.components.cluster.outputs.cluster_id }}"
+cpu        = "2048"
+memory     = "8192"
+
+git_repo_url    = "https://github.com/elie222/inbox-zero"
+git_branch      = "main"
+dockerfile_path = "./docker/Dockerfile.prod"
+
+ecr_registry   = "{{ .nuon.sandbox.outputs.ecr.registry_url}}"
+ecr_repository = "{{ .nuon.components.repository.outputs.repository_name }}"
+
+ecs_cluster_id = "{{ .nuon.components.cluster.outputs.cluster_id }}"

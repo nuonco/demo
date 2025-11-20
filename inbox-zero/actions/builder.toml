@@ -1,0 +1,25 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=action
+name    = "builder"
+timeout = "10m"
+
+[[triggers]]
+type           = "post-component-deploy"
+component_name = "builder"
+
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name            = "run"
+inline_contents = "./src/run-builder.sh"
+
+[steps.env_vars]
+AWS_REGION          = "{{ .nuon.install_stack.outputs.region }}"
+SUBNET_IDS          = "{{range $i, $subnet := .nuon.sandbox.outputs.vpc.private_subnet_ids}}{{if $i}}, {{end}}{{$subnet}}{{end}}"
+SECURITY_GROUP_ID   = "{{.nuon.sandbox.outputs.vpc.default_security_group_id}}"
+CLUSTER_ID          = "{{.nuon.components.cluster.outputs.cluster_id}}"
+TASK_DEFINITION_ARN = "{{.nuon.components.builder.outputs.task_definition_arn}}"
+
+BRANCH     = "{{.nuon.inputs.inputs.inbox_zero_branch}}"
+IMAGE_TAG  = "{{.nuon.inputs.inputs.inbox_zero_branch}}"
+BUILD_ARGS = "NEXT_PUBLIC_BASE_URL=https://app.{{.nuon.sandbox.outputs.nuon_dns.public_domain.name}}"

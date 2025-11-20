@@ -1,0 +1,17 @@
+name              = "cluster"
+type              = "terraform_module"
+terraform_version = "1.13.5"
+
+[public_repo]
+repo      = "nuonco/demo"
+branch    = "fd/new-demo/inbox-zero"
+directory = "inbox-zero/src/cluster"
+
+[vars]
+region          = "{{ .nuon.install_stack.outputs.region }}"
+vpc_id          = "{{ .nuon.install_stack.outputs.vpc_id }}"
+nuon_install_id = "{{ .nuon.install.id }}"
+private_subnet_ids = "{{ join .noun.sandbox.outputs.vpc.private_subnet_ids }}"
+
+[[var_file]]
+contents = "./vars/cluster.tfvars"
