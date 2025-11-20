@@ -13,7 +13,7 @@ enable_nuon_dns      = "true"
 public_root_domain   = "{{.nuon.install.id}}.nuon.run"
 internal_root_domain = "{{.nuon.install.id}}.internal.nuon.run"
 
-region = "us-east-2" # {{.nuon.install_stack.outputs.region}}"
+region = "{{.nuon.install_stack.outputs.region}}"
 vpc_id = "{{.nuon.install_stack.outputs.vpc_id}}"
 
 [[var_file]]

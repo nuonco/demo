@@ -53,7 +53,7 @@ metadata:
   namespace: whoami
 spec:
   ports:
-  - name: http-whoami
+  - name: http
     port: 80
     protocol: TCP
     targetPort: 8000
