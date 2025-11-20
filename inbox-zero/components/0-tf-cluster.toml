@@ -1,0 +1,13 @@
+name              = "ecs_cluster"
+type              = "terraform_module"
+terraform_version = "1.13.5"
+
+[public_repo]
+repo      = "nuonco/demo"
+directory = "inbox-zero"
+branch    = "fd/new-demo/ingress-zero"
+
+[vars]
+region          = "{{ .nuon.install_stack.outputs.region }}"
+vpc_id          = "{{ .nuon.install_stack.outputs.vpc_id }}"
+nuon_install_id = "{{ .nuon.install.id }}"

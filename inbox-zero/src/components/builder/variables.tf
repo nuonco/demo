@@ -2,6 +2,12 @@ variable "region" {
   description = "AWS Region"
   type        = string
 }
+
+variable "nuon_install_id" {
+  description = "Nuon Install ID"
+  type        = string
+}
+
 variable "ecr_registry" {
   description = "ECR registry URL (e.g., 123456789.dkr.ecr.us-east-1.amazonaws.com)"
   type        = string
