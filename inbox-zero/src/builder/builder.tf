@@ -1,15 +1,5 @@
-# ECS Cluster (create if not provided)
-resource "aws_ecs_cluster" "builder" {
-  count = var.ecs_cluster_id == null ? 1 : 0
-  name  = "${var.name_prefix}-cluster"
-
-  tags = var.tags
-}
-
-locals {
-  cluster_id  = var.ecs_cluster_id != null ? var.ecs_cluster_id : aws_ecs_cluster.builder[0].id
-  cluster_arn = var.ecs_cluster_id != null ? var.ecs_cluster_id : aws_ecs_cluster.builder[0].arn
-}
+# Note: ECS cluster is provided via var.ecs_cluster_id
+# The cluster is created by the ecs_cluster component
 
 # CloudWatch Log Group
 resource "aws_cloudwatch_log_group" "builder" {

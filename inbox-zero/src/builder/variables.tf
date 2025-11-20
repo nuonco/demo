@@ -30,19 +30,13 @@ variable "dockerfile_path" {
 }
 
 variable "vpc_id" {
-  description = "VPC ID for Fargate task"
+  description = "VPC ID for Fargate task security group"
   type        = string
-}
-
-variable "subnet_ids" {
-  description = "List of subnet IDs for Fargate task (typically private subnets with NAT gateway)"
-  type        = list(string)
 }
 
 variable "ecs_cluster_id" {
-  description = "ECS cluster ID (optional, creates one if not provided)"
+  description = "ECS cluster ID where the builder task will be registered"
   type        = string
-  default     = null
 }
 
 variable "cpu" {

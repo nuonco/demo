@@ -19,13 +19,8 @@ output "security_group_id" {
 }
 
 output "cluster_id" {
-  description = "ECS cluster ID"
-  value       = local.cluster_id
-}
-
-output "cluster_arn" {
-  description = "ECS cluster ARN"
-  value       = local.cluster_arn
+  description = "ECS cluster ID (passed through from input)"
+  value       = var.ecs_cluster_id
 }
 
 output "log_group_name" {
