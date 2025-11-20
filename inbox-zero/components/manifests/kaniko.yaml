@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaniko
+  namespace: kaniko
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kaniko
+  template:
+    metadata:
+      labels:
+        app: kaniko
+    spec:
+      initContainers:
+        - name: git-clone
+          image: alpine/git:latest
+          command:
+            - git
+            - clone
+            - "--single-branch"
+            - "--depth=1"
+            - "--branch={{.nuon.inputs.inputs.inbox_zero_branch}}"
+            - "git@github.com:elie222/inbox-zero.git"
+            - /workspace
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
+      containers:
+        - name: kaniko
+          image: gcr.io/kaniko-project/executor:latest
+          args:
+            - "--dockerfile=docker/Dockerfile"
+            - "--context=dir:///workspace"
+            - "--destination={{ .nuon.sandbox.outputs.ecr.repository_url }}/inbox-zero:{{ .nuon.inputs.inputs.inbox_zero_branch }}"
+            - "--build-arg=NEXT_PUBLIC_BASE_URL='app.{{ .nuon.sandbox.outputs.nuon_dns.public_domain.name }}'"
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
+            - name: kaniko-secret
+              mountPath: /secret
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secret/kaniko-secret.json
+      restartPolicy: Never
+      volumes:
+        - name: workspace
+          emptyDir: {}
+        - name: kaniko-secret
+          secret:
+            secretName: kaniko-secret

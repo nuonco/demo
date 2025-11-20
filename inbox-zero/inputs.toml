@@ -1,0 +1,31 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=inputs
+[[group]]
+name         = "dns"
+description  = "DNS Configrations"
+display_name = "Configurations for the root domain for Route53"
+
+[[input]]
+name         = "domain"
+description  = "domain for the AWS API Gateway e.g., nuon.run or stage.nuon.run"
+default      = "nuon.run"
+display_name = "Domain"
+group        = "dns"
+
+[[input]]
+name         = "sub_domain"
+description  = "The sub domain for the AWS API Gateway"
+default      = "api"
+display_name = "Sub Domain"
+group        = "dns"
+
+[[group]]
+name         = "inbox_zero"
+description  = "Inbox Zero Configrations"
+display_name = "Configurations for Inbox Zero"
+
+[[input]]
+name         = "inbox_zero_branch"
+description  = "Which branch to build from. Used in the `git clone --branch` arg."
+default      = "main"
+display_name = "Inbox Zero: Branch"
+group        = "inbox_zero"

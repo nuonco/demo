@@ -1,0 +1,8 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=docker_build
+# for demo purposes only
+name   = "img_inbox_zero"
+type   = "container_image"
+
+[public]
+image_url = "ghcr.io/elie222/inbox-zero"
+tag       = "latest"
