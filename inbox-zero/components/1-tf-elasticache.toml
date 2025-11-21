@@ -1,0 +1,15 @@
+#:schema https://api.nuon.co/v1/general/config-schema?source=terraform
+name              = "elasticache"
+type              = "terraform_module"
+terraform_version = "1.13.5"
+
+[public_repo]
+repo      = "nuonco/demo"
+directory = "inbox-zero/src/elasticache"
+branch    = "fd/new-demo/inbox-zero"
+
+[vars]
+region          = "{{ .nuon.install_stack.outputs.region }}"
+vpc_id          = "{{ .nuon.sandbox.outputs.vpc.id }}"
+nuon_install_id = "{{ .nuon.install.id }}"
+repository_name = "inbox-zero"
