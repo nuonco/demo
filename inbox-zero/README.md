@@ -21,20 +21,23 @@
 
 ```mermaid
 graph TD
-  cluster[cluster<br/>0-tf-cluster]
-  repository[repository<br/>1-tf-repository]
-  certificate[certificate<br/>1-tf-certificate]
-  img[img_inbox_zero<br/>0-img-ingress-zero]
-  builder[builder<br/>2-tf-builder]
+  builder["builder<br/>2-tf-builder.toml"]
+  rds_subnet["rds_subnet<br/>0-rds_subnet.toml"]
+  certificate["certificate<br/>1-tf-certificate.toml"]
+  img_inbox_zero["img_inbox_zero<br/>0-img-ingress-zero.toml"]
+  cluster["cluster<br/>0-tf-cluster.toml"]
+  elasticache["elasticache<br/>1-tf-elasticache.toml"]
+  repository["repository<br/>1-tf-repository.toml"]
+  rds_cluster["rds_cluster<br/>1-rds_cluster_nuon.toml"]
 
   cluster --> builder
   repository --> builder
 
-  style builder fill:#D6B0FC,stroke:#8040BF,color:#000
-  style cluster fill:#D6B0FC,stroke:#8040BF,color:#000
-  style repository fill:#D6B0FC,stroke:#8040BF,color:#000
-  style certificate fill:#D6B0FC,stroke:#8040BF,color:#000
-  style img fill:#FCA04A,stroke:#FCA04A,color:#000
+  class builder,rds_subnet,certificate,cluster,elasticache,repository,rds_cluster tfClass;
+  class img_inbox_zero imgClass;
+
+  classDef tfClass fill:#D6B0FC,stroke:#8040BF,color:#000;
+  classDef imgClass fill:#FCA04A,stroke:#CC803A,color:#000;
 ```
 
 ### Cluster

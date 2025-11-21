@@ -1,0 +1,21 @@
+#:schema https://api.nuon.co/v1/general/config-schema?type=terraform
+name              = "rds_cluster"
+type              = "terraform_module"
+terraform_version = "1.13.5"
+
+[public_repo]
+directory = "aws/rds-cluster"
+repo      = "nuonco/components"
+branch    = "fd/rds-cluster-v2"
+
+[vars]
+port                                = "5432"
+identifier                          = "{{.nuon.install.id}}"
+db_name                             = "production"
+db_user                             = "production"
+security_group                      = "{{.nuon.install.sandbox.outputs.vpc.default_security_group_id}}"
+vpc_id                              = "{{.nuon.install.sandbox.outputs.vpc.id}}"
+allocated_storage                   = "100"
+iam_database_authentication_enabled = "true"
+deletion_protection                 = "true"
+apply_immediately                   = "false"
