@@ -2,7 +2,7 @@
 
 <center>
   <img src="https://mintlify.s3-us-west-1.amazonaws.com/nuoninc/logo/dark.svg"/>
-  <h1>Clickhouse + tailscale</h1>
+  <h1>Clickhouse + Tailscale</h1>
   <small>
 {{ if .nuon.install_stack.outputs }}
 AWS | {{ dig "account_id" "000000000000" .nuon.install_stack.outputs }} | {{ dig "region" "xx-vvvv-00" .nuon.install_stack.outputs }} | {{ dig "vpc_id" "vpc-000000" .nuon.install_stack.outputs }}
@@ -49,7 +49,7 @@ No install stack configured.
 
 ### Tailscale
 
-This demo deploys the tailscale kuberentes operator. Before getting started, ensure the following:
+This demo deploys the tailscale kubernetes operator. Before getting started, ensure the following:
 
 1. MagicDNS is enabled on your tailnet.
 2. HTTPS is enabled on your tailnet.
@@ -94,7 +94,7 @@ If you run the `ch_data_dbpedia`, you can then navigate to the ch-ui and explore
 
 ## Accessing the EKS Cluster
 
-In a BYOC context, access to the cluster is limited. For clusters you control, you can do the follwoing:
+In a BYOC context, access to the cluster is limited. For clusters you control, you can do the following:
 
 1. Add an access entry for the relevant role.
 2. Grant the following perms: AWSEKSAdmin, AWSClusterAdmin.
