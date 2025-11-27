@@ -52,7 +52,7 @@ display_name = "Temporal AI Agent Config"
 [[input]]
 name         = "llm_model"
 description  = "The model to use (e.g., \"openai/gpt-4o\", \"anthropic/claude-sonnet-4-5-20250929\", \"google/gemini-pro\", etc.)"
-default      = "anthropic/claude-4"
+default      = "anthropic/claude-sonnet-4-5-20250929"
 display_name = "LLM MODEL"
 group        = "temporal_ai_agent"
 
