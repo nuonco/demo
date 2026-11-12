@@ -21,7 +21,7 @@ jobs:
     name: "Sync: EKS Simple"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.7.0
       - name: sync eks-simple
         uses: nuonco/actions-nuon@v0.0.2
         with:
@@ -36,7 +36,7 @@ jobs:
     name: "Sync: EKS Simple Subdomains"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.7.0
       - name: sync eks-simple-subdomains
         uses: nuonco/actions-nuon@v0.0.2
         with:
